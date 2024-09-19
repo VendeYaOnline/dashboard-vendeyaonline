@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useTitle } from "@/hooks/useTitle";
+import { useRef, useState } from "react";
 
 /* const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/" },
@@ -44,6 +45,7 @@ const bottomMenuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [valueFilter, setValueFilter] = useState("");
   const { setTitle } = useTitle();
 
   return (
@@ -56,6 +58,7 @@ export default function Sidebar() {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
+            onChange={(e) => setValueFilter(e.target.value.toLocaleLowerCase())}
             type="text"
             placeholder="Search"
             className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -65,21 +68,23 @@ export default function Sidebar() {
       <div className="flex-1 overflow-y-auto">
         <nav className="px-4 pt-4">
           <p className="text-xs font-semibold text-gray-400 mb-2">Menu</p>
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setTitle(item.name)}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm mb-1 ${
-                pathname === item.href
-                  ? "bg-purple-100 text-purple-600 font-medium"
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              {item.name}
-            </Link>
-          ))}
+          {menuItems
+            .filter((i) => i.name.toLocaleLowerCase().includes(valueFilter))
+            .map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setTitle(item.name)}
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm mb-1 ${
+                  pathname === item.href
+                    ? "bg-purple-100 text-purple-600 font-medium"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+                {item.name}
+              </Link>
+            ))}
         </nav>
         {/*         <nav className="px-4 pt-4 mt-4">
           <p className="text-xs font-semibold text-gray-400 mb-2">
