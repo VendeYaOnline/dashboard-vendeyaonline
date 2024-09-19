@@ -6,7 +6,7 @@ import { Bell, Download } from "lucide-react";
 export default function Header() {
   const { title } = useTitle();
   return (
-    <header className="flex justify-between items-center p-4 border-b">
+    <header className="flex justify-between items-center p-5 border-b">
       <h1 className="text-2xl font-semibold">{title}</h1>
       <div className="flex items-center gap-4">
         <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">

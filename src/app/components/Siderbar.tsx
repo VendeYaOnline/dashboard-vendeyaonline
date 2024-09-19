@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useTitle } from "@/hooks/useTitle";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { getTitle } from "@/utils";
 
 /* const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/" },
@@ -48,6 +49,11 @@ export default function Sidebar() {
   const [valueFilter, setValueFilter] = useState("");
   const { setTitle } = useTitle();
 
+  useEffect(() => {
+    const title = getTitle(pathname);
+    setTitle(title);
+  }, []);
+
   return (
     <div className="flex flex-col h-screen w-64 bg-white border-r">
       <div className="p-4 flex items-center gap-2">
@@ -60,8 +66,8 @@ export default function Sidebar() {
           <input
             onChange={(e) => setValueFilter(e.target.value.toLocaleLowerCase())}
             type="text"
-            placeholder="Search"
-            className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+            placeholder="Buscar"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
           />
         </div>
       </div>
@@ -77,7 +83,7 @@ export default function Sidebar() {
                 onClick={() => setTitle(item.name)}
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm mb-1 ${
                   pathname === item.href
-                    ? "bg-purple-100 text-purple-600 font-medium"
+                    ? "bg-indigo-100 text-indigo-600 font-medium"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
