@@ -19,20 +19,9 @@ type Inputs = {
 interface Props {
   active: boolean;
   onClose: () => void;
-  register: UseFormRegister<Inputs>;
-  errors: FieldErrors<Inputs>;
-  reset: UseFormReset<Inputs>;
-  handleSubmit: UseFormHandleSubmit<Inputs, undefined>;
 }
 
-const Modal = ({
-  active,
-  onClose,
-  register,
-  errors,
-  reset,
-  handleSubmit,
-}: Props) => {
+const Modal = ({ active, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,7 +54,7 @@ const Modal = ({
         className={classes["container-modal"]}
         onClick={handleContainerClick}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <div className={classes["form-modal"]} onClick={handleFormClick}>
             <CircleX
               className="absolute right-5 cursor-pointer"
@@ -76,12 +65,8 @@ const Modal = ({
               Te enviaremos un email con un enlace para que puedas restablecer
               tu contraseña.
             </p>
-            <input
-              placeholder="Email"
-              className={classes.input}
-              {...register("email")}
-            />
-            <p className="text-xs text-red-700 mt-1">{errors.email?.message}</p>
+            <input placeholder="Email" className={classes.input} />
+            {/* <p className="text-xs text-red-700 mt-1">{errors.email?.message}</p> */}
             <div className="flex gap-2">
               <button className={classes["button-modal"]} disabled={loading}>
                 {loading ? (

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { FileText } from "lucide-react";
 import { invoices } from "@/utils";
+import Modal from "../modal/Modal";
 
 interface Pros {
   headers: string[];
@@ -30,6 +31,15 @@ export default function Table({
 }: Pros) {
   const itemsPerPage = totalResult;
   const totalPages = Math.ceil(invoices.length / itemsPerPage);
+  const [openModal, setOpenModal] = useState(false);
+
+  const onClose = () => {
+    setOpenModal(false);
+  };
+
+  const onOpen = () => {
+    setOpenModal(true);
+  };
 
   // Estado para la página actual
   const [currentPage, setCurrentPage] = useState(1);
@@ -87,8 +97,11 @@ export default function Table({
 
   return (
     <>
-      <Button className="mb-4">{textButton}</Button>
+      <Button className="mb-4" onClick={onOpen}>
+        {textButton}
+      </Button>
       <Card className="p-5">
+        <Modal active={openModal} onClose={onClose} />
         {data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
