@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "./components/Siderbar";
-import Header from "./components/Header";
+import Sidebar from "../components/ui/Siderbar";
+import Header from "../components/ui/Header";
 
 export const metadata: Metadata = {
   title: "VendeYaOnline",
