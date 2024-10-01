@@ -107,8 +107,8 @@ export default function Table({
             <TableCaption>{renderPagination()}</TableCaption>
             <TableHeader>
               <TableRow>
-                {headers.map((header) => (
-                  <TableHead>{header}</TableHead>
+                {headers.map((header,index) => (
+                  <TableHead key={index}>{header}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
