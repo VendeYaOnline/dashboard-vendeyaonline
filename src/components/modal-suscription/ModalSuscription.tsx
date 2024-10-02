@@ -41,7 +41,6 @@ const schema = yup
 
 const ModalSuscription = ({ active, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
-  const activeError = useRef(false);
   const {
     register,
     handleSubmit,
@@ -63,7 +62,6 @@ const ModalSuscription = ({ active, onClose }: Props) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("data", data);
-    activeError.current = true;
     setLoading(true);
     try {
       reset();

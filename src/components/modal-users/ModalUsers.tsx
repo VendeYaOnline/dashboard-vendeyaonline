@@ -16,12 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import toast from "react-hot-toast";
 
 type Inputs = {
-  price: string;
-  type: string;
-  date: Date;
-  client: string;
+  username: string;
+  email: string;
+  password: string;
+  lastname: string;
+  phone: string;
+  department: string;
+  city: string;
 };
 
 interface Props {
@@ -31,16 +35,18 @@ interface Props {
 
 const schema = yup
   .object({
-    price: yup.string().required("Campo obligatorio"),
-    type: yup.string().required("Campo obligatorio"),
-    date: yup.date().required("Campo obligatorio"),
-    client: yup.string().required("Campo obligatorio"),
+    username: yup.string().required("Campo obligatorio"),
+    email: yup.string().required("Campo obligatorio"),
+    password: yup.string().required("Campo obligatorio"),
+    lastname: yup.string().required("Campo obligatorio"),
+    phone: yup.string().required("Campo obligatorio"),
+    department: yup.string().required("Campo obligatorio"),
+    city: yup.string().required("Campo obligatorio"),
   })
   .required();
 
 const ModalUsers = ({ active, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
-  const activeError = useRef(false);
   const {
     register,
     handleSubmit,
@@ -62,10 +68,8 @@ const ModalUsers = ({ active, onClose }: Props) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("data", data);
-    activeError.current = true;
     setLoading(true);
-    /*     try {
-      await changePassword(data.email);
+    try {
       reset();
       setLoading(false);
       toast.success(
@@ -74,7 +78,7 @@ const ModalUsers = ({ active, onClose }: Props) => {
     } catch (error) {
       console.log("error-password", error);
       setLoading(false);
-    } */
+    }
   };
 
   return (
@@ -91,86 +95,111 @@ const ModalUsers = ({ active, onClose }: Props) => {
                 onClose(), reset();
               }}
             />
-            <h1 className="mb-2 font-bold">Sucripción</h1>
+            <h1 className="mb-2 font-bold">Usuario</h1>
             <div className="flex flex-col gap-1">
-              <label id="price" className="text-sm">
-                Precio
+              <label id="username" className="text-sm">
+                Username
               </label>
               <Input
-                id="price"
-                type="number"
-                placeholder="$0"
-                {...register("price")}
+                id="username"
+                type="text"
+                placeholder="Yosip"
+                {...register("username")}
               />
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.price?.message}
+                {errors.username?.message}
               </p>
             </div>
+
             <div className="flex flex-col gap-1">
-              <label id="type" className="text-sm">
-                Tipo
+              <label id="lastname" className="text-sm">
+                Apellidos
               </label>
-              <Select onValueChange={(value) => setValue("type", value)}>
-                <SelectTrigger className="focus:ring-1 focus:ring-indigo-600 p-5">
-                  {watch("type") ? (
-                    <SelectValue />
-                  ) : (
-                    <span className="text-[#9ca3af]">Selecciona el tipo</span>
-                  )}
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Input
+                id="lastname"
+                type="text"
+                placeholder="Parrado"
+                {...register("lastname")}
+              />
 
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.type?.message && !watch("type") && errors.type?.message}
+                {errors.lastname?.message}
               </p>
             </div>
             <div className="flex flex-col gap-1">
-              <label id="client" className="text-sm">
-                Cliente
+              <label id="email" className="text-sm">
+                Email
               </label>
-              <Select onValueChange={(value) => setValue("client", value)}>
-                <SelectTrigger className="focus:ring-1 focus:ring-indigo-600 p-5">
-                  {watch("client") ? (
-                    <SelectValue />
-                  ) : (
-                    <span className="text-[#9ca3af]">
-                      Selecciona un cliente
-                    </span>
-                  )}
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Input
+                id="email"
+                type="email"
+                placeholder="mikeparrado@gmail.com"
+                {...register("email")}
+              />
+              <p className="text-left text-xs text-red-600 mt-1">
+                {errors.email?.message}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label id="password" className="text-sm">
+                Contraseña
+              </label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="***"
+                {...register("password")}
+              />
+              <p className="text-left text-xs text-red-600 mt-1">
+                {errors.password?.message}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label id="phone" className="text-sm">
+                Telefono
+              </label>
+              <Input
+                id="phone"
+                type="number"
+                placeholder="3204372376"
+                {...register("phone")}
+              />
+              <p className="text-left text-xs text-red-600 mt-1">
+                {errors.phone?.message}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label id="department" className="text-sm">
+                Departamento
+              </label>
+              <Input
+                id="department"
+                type="text"
+                placeholder="Casanare"
+                {...register("department")}
+              />
 
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.client?.message &&
-                  !watch("client") &&
-                  errors.client?.message}
+                {errors.department?.message}
               </p>
             </div>
+
             <div className="flex flex-col gap-1">
-              <label id="date" className="text-sm">
-                Fecha
+              <label id="city" className="text-sm">
+                Ciudad
               </label>
-              <DatePicker setValue={setValue} />
+              <Input
+                id="city"
+                type="text"
+                placeholder="Bogotá"
+                {...register("city")}
+              />
+
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.date?.message && !watch("date") && errors.date?.message}
+                {errors.city?.message}
               </p>
             </div>
             <div className="flex gap-2">
@@ -179,7 +208,7 @@ const ModalUsers = ({ active, onClose }: Props) => {
                 className={classes["button-modal"]}
                 disabled={loading}
               >
-                {loading ? <div className="spiner" /> : "Crear sucripción"}
+                {loading ? <div className="spiner" /> : "Crear usuario"}
               </button>
             </div>
           </div>
