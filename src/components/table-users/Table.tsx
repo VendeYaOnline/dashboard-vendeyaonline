@@ -12,9 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileText } from "lucide-react";
-import { invoices } from "@/utils";
-import Modal from "../modal/Modal";
+import { Eye, FileText } from "lucide-react";
+import { clients } from "@/utils";
+import { User } from "@/interfaces";
+import ModalUsers from "../modal-users/ModalUsers";
 
 interface Pros {
   headers: string[];
@@ -23,14 +24,14 @@ interface Pros {
   totalResult: number;
 }
 
-export default function Table({
+export default function TableUsers({
   data,
   headers,
   textButton,
   totalResult,
 }: Pros) {
   const itemsPerPage = totalResult;
-  const totalPages = Math.ceil(invoices.length / itemsPerPage);
+  const totalPages = Math.ceil(clients.length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {
@@ -45,7 +46,7 @@ export default function Table({
   const [currentPage, setCurrentPage] = useState(1);
 
   // Filtrar las facturas según la página actual
-  const currentInvoices = invoices.slice(
+  const currentInvoices = clients.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -101,39 +102,30 @@ export default function Table({
         {textButton}
       </Button>
       <Card className="p-5">
-        <Modal active={openModal} onClose={onClose} />
+        <ModalUsers active={openModal} onClose={onClose} />
         {data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
             <TableHeader>
               <TableRow>
-                {headers.map((header,index) => (
+                {headers.map((header, index) => (
                   <TableHead key={index}>{header}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentInvoices.map((invoice: any) => (
-                <TableRow key={invoice.invoice}>
-                  <TableCell className="font-medium">
-                    {invoice.invoice}
+              {currentInvoices.map((invoice: User) => (
+                <TableRow key={invoice.id}>
+                  <TableCell className="font-medium">{invoice.id}</TableCell>
+                  <TableCell>{invoice.username}</TableCell>
+                  <TableCell>{invoice.email}</TableCell>
+                  <TableCell>{invoice.phone}</TableCell>
+                  <TableCell>
+                    <Eye className="cursor-pointer text-indigo-600 ml-5" />
                   </TableCell>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.paymentMethod}</TableCell>
-                  <TableCell>{invoice.totalAmount}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
-            {/*             <TableFooter>
-              <TableRow>
-                <TableCell colSpan={3} className="text-3xl font-bold">
-                  Total
-                </TableCell>
-                <TableCell className="text-3xl font-bold text-right">
-                  $2,500.00
-                </TableCell>
-              </TableRow>
-            </TableFooter> */}
           </TableUi>
         ) : (
           <div className="p-10 m-auto h-[300px]  text-center flex justify-center items-center gap-4 flex-col">

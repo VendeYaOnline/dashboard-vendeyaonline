@@ -1,14 +1,7 @@
 "use client";
 
-import {
-  FieldErrors,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormReset,
-  useForm,
-} from "react-hook-form";
-import classes from "./Modal.module.css";
+import { SubmitHandler, useForm } from "react-hook-form";
+import classes from "./ModalSuscription.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
@@ -23,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import toast from "react-hot-toast/headless";
 
 type Inputs = {
   price: string;
@@ -45,7 +39,7 @@ const schema = yup
   })
   .required();
 
-const Modal = ({ active, onClose }: Props) => {
+const ModalSuscription = ({ active, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
   const activeError = useRef(false);
   const {
@@ -71,8 +65,7 @@ const Modal = ({ active, onClose }: Props) => {
     console.log("data", data);
     activeError.current = true;
     setLoading(true);
-    /*     try {
-      await changePassword(data.email);
+    try {
       reset();
       setLoading(false);
       toast.success(
@@ -81,7 +74,7 @@ const Modal = ({ active, onClose }: Props) => {
     } catch (error) {
       console.log("error-password", error);
       setLoading(false);
-    } */
+    }
   };
 
   return (
@@ -196,4 +189,4 @@ const Modal = ({ active, onClose }: Props) => {
   );
 };
 
-export default Modal;
+export default ModalSuscription;

@@ -1,13 +1,13 @@
 "use client";
 
-import { Table } from "@/components";
+import { TableSuscription } from "@/components";
 import { invoices } from "@/utils";
 
 export default function Home() {
   const headers = ["ID", "FECHA", "PRECIO", "TIPO"];
   return (
     <div>
-      <Table
+      <TableSuscription
         data={invoices}
         headers={headers}
         textButton="Crear suscripción"
