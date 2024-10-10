@@ -1,6 +1,6 @@
 "use client";
 
-import { TableSuscription } from "@/components";
+import TableSuscription from "@/components/table-suscription/Table";
 import { invoices } from "@/utils";
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { TableUsers } from "@/components";
+import TableUsers from "@/components/table-users/Table";
 import { clients } from "@/utils";
 import React from "react";
 

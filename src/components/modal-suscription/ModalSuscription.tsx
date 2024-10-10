@@ -5,7 +5,7 @@ import classes from "./ModalSuscription.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Input } from "../ui/input";
 import { DatePicker } from "../ui/date";
 import {
