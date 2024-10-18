@@ -5,10 +5,11 @@ import classes from "./ModalUsers.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
 import { Input } from "../ui/input";
 
 import toast from "react-hot-toast";
+import { mutationRegisterUser } from "@/api/mutation";
+import { userQuery } from "@/api/queries";
 
 type Inputs = {
   username: string;
@@ -38,7 +39,8 @@ const schema = yup
   .required();
 
 const ModalUsers = ({ active, onClose }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const { mutateAsync, isLoading } = mutationRegisterUser();
+  const { refetch } = userQuery();
   const {
     register,
     handleSubmit,
@@ -56,17 +58,14 @@ const ModalUsers = ({ active, onClose }: Props) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("data", data);
-    setLoading(true);
     try {
+      await mutateAsync(data);
       reset();
-      setLoading(false);
-      toast.success(
-        "Te hemos enviado un email con un enlace para restablecer tu contraseña"
-      );
+      refetch();
+      onClose();
+      toast.success("Usuario creado exitosamente");
     } catch (error) {
       console.log("error-password", error);
-      setLoading(false);
     }
   };
 
@@ -195,9 +194,9 @@ const ModalUsers = ({ active, onClose }: Props) => {
               <button
                 type="submit"
                 className={classes["button-modal"]}
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? <div className="spiner" /> : "Crear usuario"}
+                {isLoading ? <div className="spiner" /> : "Crear usuario"}
               </button>
             </div>
           </div>

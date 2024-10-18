@@ -10,6 +10,10 @@ export const getUsers = async () => {
   return (await axiosConfig.get<User[]>("/get-users")).data;
 };
 
+export const registerUser = async (user: Inputs) => {
+  return axiosConfig.post<User>("/create-user", user);
+};
+
 export const loginUser = async (user: { email: string; password: string }) => {
   return axiosConfig.post("/login-user", user);
 };

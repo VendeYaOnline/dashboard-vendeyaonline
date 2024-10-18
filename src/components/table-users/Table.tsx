@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, FileText, Pencil } from "lucide-react";
+import { FileText, Pencil } from "lucide-react";
 import { User } from "@/interfaces";
 import ModalUsers from "../modal-users/ModalUsers";
 import Link from "next/link";
