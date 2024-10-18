@@ -21,3 +21,7 @@ export const loginUser = async (user: { email: string; password: string }) => {
 export const updatedUser = async ({ id, user }: Props) => {
   return (await axiosConfig.put(`/update-user/${id}`, user)).data;
 };
+
+export const deleteUser = async ({ id, user }: Props) => {
+  return (await axiosConfig.put(`/update-user/${id}`, user)).data;
+};

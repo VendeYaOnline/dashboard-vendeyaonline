@@ -12,11 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileText, Pencil } from "lucide-react";
+import { FileText, Pencil, Trash2 } from "lucide-react";
 import { User } from "@/interfaces";
 import ModalUsers from "../modal-users/ModalUsers";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
+import ModalDelete from "../modal-delete/ModalDelete";
 
 interface Pros {
   headers: string[];
@@ -34,10 +35,15 @@ export default function TableUsers({
   const itemsPerPage = totalResult;
   const totalPages = Math.ceil((data || []).length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDetele] = useState(false);
   const { setUser } = useUser();
 
   const onClose = () => {
     setOpenModal(false);
+  };
+
+  const onCloseDelete = () => {
+    setOpenModalDetele(false);
   };
 
   const onOpen = () => {
@@ -104,6 +110,7 @@ export default function TableUsers({
       </Button>
       <Card className="p-5">
         <ModalUsers active={openModal} onClose={onClose} />
+        <ModalDelete active={openModalDelete} onClose={onCloseDelete} />
         {data && data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
@@ -123,7 +130,7 @@ export default function TableUsers({
                   </TableCell>
                   <TableCell className="text-base">{invoice.email}</TableCell>
                   <TableCell className="text-base">{invoice.phone}</TableCell>
-                  <TableCell className="text-base">
+                  <TableCell className="text-base flex">
                     <Link href={`/details-user/${invoice.id}`}>
                       <Pencil
                         size={18}
@@ -131,6 +138,12 @@ export default function TableUsers({
                         onClick={() => setUser(invoice)}
                       />
                     </Link>
+
+                    <Trash2
+                      size={18}
+                      className="cursor-pointer text-[#f7304a] ml-5"
+                      onClick={() => setOpenModalDetele(true)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
