@@ -9,3 +9,14 @@ export interface User {
   createdat: Date;
   updatedat: Date;
 }
+
+
+export type Inputs = {
+  username: string;
+  email: string;
+  password?: string;
+  lastname: string;
+  phone: string;
+  department: string;
+  city: string;
+};

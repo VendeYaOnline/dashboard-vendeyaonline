@@ -5,17 +5,9 @@ import classes from "./ModalUsers.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Input } from "../ui/input";
-import { DatePicker } from "../ui/date";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+
 import toast from "react-hot-toast";
 
 type Inputs = {
@@ -51,9 +43,6 @@ const ModalUsers = ({ active, onClose }: Props) => {
     register,
     handleSubmit,
     reset,
-    watch,
-    setValue,
-
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver<Inputs>(schema) });
 

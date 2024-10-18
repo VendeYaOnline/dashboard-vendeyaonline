@@ -12,10 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, FileText } from "lucide-react";
+import { Eye, FileText, Pencil } from "lucide-react";
 import { User } from "@/interfaces";
 import ModalUsers from "../modal-users/ModalUsers";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
 
 interface Pros {
   headers: string[];
@@ -33,6 +34,7 @@ export default function TableUsers({
   const itemsPerPage = totalResult;
   const totalPages = Math.ceil((data || []).length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
+  const { setUser } = useUser();
 
   const onClose = () => {
     setOpenModal(false);
@@ -95,7 +97,6 @@ export default function TableUsers({
       </div>
     );
   };
-
   return (
     <>
       <Button className="mb-4" onClick={onOpen}>
@@ -116,13 +117,19 @@ export default function TableUsers({
             <TableBody>
               {currentInvoices.map((invoice: User) => (
                 <TableRow key={invoice.id}>
-                  <TableCell className="font-medium">{invoice.id}</TableCell>
-                  <TableCell>{invoice.username}</TableCell>
-                  <TableCell>{invoice.email}</TableCell>
-                  <TableCell>{invoice.phone}</TableCell>
-                  <TableCell>
-                    <Link href="/details-user">
-                      <Eye className="cursor-pointer text-indigo-600 ml-5" />
+                  <TableCell className="text-base">{invoice.id}</TableCell>
+                  <TableCell className="text-base">
+                    {invoice.username}
+                  </TableCell>
+                  <TableCell className="text-base">{invoice.email}</TableCell>
+                  <TableCell className="text-base">{invoice.phone}</TableCell>
+                  <TableCell className="text-base">
+                    <Link href={`/details-user/${invoice.id}`}>
+                      <Pencil
+                        size={18}
+                        className="cursor-pointer text-[#6c30f7] ml-5"
+                        onClick={() => setUser(invoice)}
+                      />
                     </Link>
                   </TableCell>
                 </TableRow>
