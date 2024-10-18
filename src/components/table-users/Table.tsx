@@ -15,6 +15,7 @@ import {
 import { Eye, FileText } from "lucide-react";
 import { User } from "@/interfaces";
 import ModalUsers from "../modal-users/ModalUsers";
+import Link from "next/link";
 
 interface Pros {
   headers: string[];
@@ -120,7 +121,9 @@ export default function TableUsers({
                   <TableCell>{invoice.email}</TableCell>
                   <TableCell>{invoice.phone}</TableCell>
                   <TableCell>
-                    <Eye className="cursor-pointer text-indigo-600 ml-5" />
+                    <Link href="/details-user">
+                      <Eye className="cursor-pointer text-indigo-600 ml-5" />
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
