@@ -13,13 +13,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Eye, FileText } from "lucide-react";
-import { clients } from "@/utils";
 import { User } from "@/interfaces";
 import ModalUsers from "../modal-users/ModalUsers";
 
 interface Pros {
   headers: string[];
-  data: any[];
+  data?: User[];
   textButton: string;
   totalResult: number;
 }
@@ -31,7 +30,7 @@ export default function TableUsers({
   totalResult,
 }: Pros) {
   const itemsPerPage = totalResult;
-  const totalPages = Math.ceil(clients.length / itemsPerPage);
+  const totalPages = Math.ceil((data || []).length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {
@@ -46,7 +45,7 @@ export default function TableUsers({
   const [currentPage, setCurrentPage] = useState(1);
 
   // Filtrar las facturas según la página actual
-  const currentInvoices = clients.slice(
+  const currentInvoices = (data || []).slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -103,7 +102,7 @@ export default function TableUsers({
       </Button>
       <Card className="p-5">
         <ModalUsers active={openModal} onClose={onClose} />
-        {data.length ? (
+        {data && data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
             <TableHeader>

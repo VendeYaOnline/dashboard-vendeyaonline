@@ -85,16 +85,3 @@ export const invoices = [
     paymentMethod: "Credit Card",
   },
 ];
-
-export const clients = [
-  {
-    id: 1,
-    username: "Yosip Mike Colin",
-    email: "colinparrado@gmail.com",
-    password: "yosip123",
-    lastname: "Parrado",
-    phone: "320417243",
-    country: "Colombia",
-    city: "Bogotá",
-  },
-];

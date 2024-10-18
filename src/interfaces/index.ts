@@ -1,11 +1,11 @@
-
 export interface User {
   id: number;
   username: string;
-  email: string;
-  password: string;
   lastname: string;
+  email: string;
   phone: string;
-  country: string;
   city: string;
+  department: string;
+  createdat: Date;
+  updatedat: Date;
 }

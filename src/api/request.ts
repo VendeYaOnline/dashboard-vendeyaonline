@@ -1,7 +1,8 @@
+import { User } from "@/interfaces";
 import { axiosConfig } from "./config";
 
 export const getUsers = async () => {
-  axiosConfig.get("/get-users");
+  return (await axiosConfig.get<User[]>("/get-users")).data;
 };
 
 export const registerUser = async (user: any) => {
