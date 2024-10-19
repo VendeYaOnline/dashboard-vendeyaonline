@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -36,6 +36,7 @@ export default function TableUsers({
   const totalPages = Math.ceil((data || []).length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDetele] = useState(false);
+  const idElement = useRef(0);
   const { setUser } = useUser();
 
   const onClose = () => {
@@ -110,7 +111,11 @@ export default function TableUsers({
       </Button>
       <Card className="p-5">
         <ModalUsers active={openModal} onClose={onClose} />
-        <ModalDelete active={openModalDelete} onClose={onCloseDelete} />
+        <ModalDelete
+          active={openModalDelete}
+          onClose={onCloseDelete}
+          idElement={idElement.current}
+        />
         {data && data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
@@ -142,7 +147,10 @@ export default function TableUsers({
                     <Trash2
                       size={18}
                       className="cursor-pointer text-[#f7304a] ml-5"
-                      onClick={() => setOpenModalDetele(true)}
+                      onClick={() => {
+                        setOpenModalDetele(true),
+                          (idElement.current = invoice.id);
+                      }}
                     />
                   </TableCell>
                 </TableRow>

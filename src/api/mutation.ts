@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { loginUser, updatedUser, registerUser } from "./request";
+import { loginUser, updatedUser, registerUser, deleteUser } from "./request";
 
 export const mutationRegisterUser = () => {
   return useMutation(registerUser);
@@ -11,4 +11,8 @@ export const mutationLoginUser = () => {
 
 export const mutationUpdatedUser = () => {
   return useMutation(updatedUser);
+};
+
+export const mutationDeleteUser = () => {
+  return useMutation(deleteUser);
 };

@@ -28,13 +28,34 @@ interface Props {
 
 const schema = yup
   .object({
-    username: yup.string().required("Campo obligatorio"),
-    email: yup.string().required("Campo obligatorio"),
-    password: yup.string().required("Campo obligatorio"),
-    lastname: yup.string().required("Campo obligatorio"),
-    phone: yup.string().required("Campo obligatorio"),
-    department: yup.string().required("Campo obligatorio"),
-    city: yup.string().required("Campo obligatorio"),
+    username: yup.string().required("Nombre es requerido"),
+    lastname: yup.string().required("Apellido es requerido"),
+    department: yup.string().required("Departamento es requerido"),
+    city: yup.string().required("Ciudad es requerida"),
+    phone: yup
+      .string()
+      .required("Teléfono es requerido")
+      .matches(/^\d+$/, "El número de teléfono debe contener solo dígitos")
+      .test(
+        "len",
+        "El número de teléfono debe tener entre 7 y 10 dígitos",
+        (val) => (val ? val.length > 6 && val.length < 11 : false)
+      ),
+    email: yup
+      .string()
+      .email("Correo electrónico no válido")
+      .required("Correo electrónico es requerido")
+      .matches(
+        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{1,})$/,
+        "Correo electrónico no válido"
+      ),
+    password: yup
+      .string()
+      .required("Contraseña es requerida")
+      .min(6, "La contraseña debe tener al menos 6 caracteres")
+      .matches(/[A-Z]/, "La contraseña debe tener al menos una letra mayúscula")
+      .matches(/[a-z]/, "La contraseña debe tener al menos una letra minúscula")
+      .matches(/\d/, "La contraseña debe tener al menos un número"),
   })
   .required();
 
@@ -64,8 +85,12 @@ const ModalUsers = ({ active, onClose }: Props) => {
       refetch();
       onClose();
       toast.success("Usuario creado exitosamente");
-    } catch (error) {
-      console.log("error-password", error);
+    } catch (error: any) {
+      if (error.response.data.error === '"email" must be a valid email') {
+        toast.error("El email debe ser un correo electrónico válido");
+      } else {
+        toast.error("Error inesperado");
+      }
     }
   };
 

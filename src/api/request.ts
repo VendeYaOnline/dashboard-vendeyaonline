@@ -22,6 +22,6 @@ export const updatedUser = async ({ id, user }: Props) => {
   return (await axiosConfig.put(`/update-user/${id}`, user)).data;
 };
 
-export const deleteUser = async ({ id, user }: Props) => {
-  return (await axiosConfig.put(`/update-user/${id}`, user)).data;
+export const deleteUser = async (id: number) => {
+  return (await axiosConfig.delete(`/delete-user/${id}`)).data;
 };
