@@ -5,7 +5,6 @@ import classes from "./ModalSuscription.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
 import { Input } from "../ui/input";
 import { DatePicker } from "../ui/date";
 import {
@@ -16,7 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import toast from "react-hot-toast/headless";
+import toast from "react-hot-toast";
+import { subscriptionsQuery, userQuery } from "@/api/queries";
+import { mutationSubscription } from "@/api/mutation";
+import { formatDateText } from "@/utils";
 
 type Inputs = {
   price: string;
@@ -40,7 +42,9 @@ const schema = yup
   .required();
 
 const ModalSuscription = ({ active, onClose }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const { data } = userQuery();
+  const { refetch } = subscriptionsQuery();
+  const { mutateAsync, isLoading } = mutationSubscription();
   const {
     register,
     handleSubmit,
@@ -61,17 +65,24 @@ const ModalSuscription = ({ active, onClose }: Props) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("data", data);
-    setLoading(true);
     try {
+      await mutateAsync({
+        ...data,
+        price: Number(data.price),
+        client: Number(data.client),
+        date: formatDateText(data.date),
+      });
+      refetch();
       reset();
-      setLoading(false);
-      toast.success(
-        "Te hemos enviado un email con un enlace para restablecer tu contraseña"
-      );
-    } catch (error) {
-      console.log("error-password", error);
-      setLoading(false);
+      toast.success("Suscripción creada exitosamente");
+      onClose();
+    } catch (error: any) {
+      const { message } = error.response.data;
+      if (message === "The user already has an active subscription") {
+        toast.error("El cliente ya tiene una suscripción");
+      } else {
+        toast.error("Error inesperado");
+      }
     }
   };
 
@@ -118,11 +129,8 @@ const ModalSuscription = ({ active, onClose }: Props) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                    <SelectItem value="Tienda Online">Tienda Online</SelectItem>
+                    <SelectItem value="Página web">Página web</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -147,11 +155,11 @@ const ModalSuscription = ({ active, onClose }: Props) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                    {data?.map((client) => (
+                      <SelectItem key={client.id} value={client.id + ""}>
+                        {client.username + " - " + client.lastname}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -175,9 +183,9 @@ const ModalSuscription = ({ active, onClose }: Props) => {
               <button
                 type="submit"
                 className={classes["button-modal"]}
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? <div className="spiner" /> : "Crear sucripción"}
+                {isLoading ? <div className="spiner" /> : "Crear sucripción"}
               </button>
             </div>
           </div>

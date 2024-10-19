@@ -10,7 +10,6 @@ export interface User {
   updatedat: Date;
 }
 
-
 export type Inputs = {
   username: string;
   email: string;
@@ -20,3 +19,20 @@ export type Inputs = {
   department: string;
   city: string;
 };
+
+export interface Subscription {
+  price: number;
+  type: string;
+  date: string;
+  client: number;
+}
+
+export interface SubscriptionResponse {
+  id: number;
+  price: number;
+  type: string;
+  date: string;
+  client: number;
+  createdat: string;
+  updatedat: string;
+}

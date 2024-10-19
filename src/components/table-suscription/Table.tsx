@@ -13,12 +13,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { FileText } from "lucide-react";
-import { invoices } from "@/utils";
 import ModalSuscription from "../modal-suscription/ModalSuscription";
+import { SubscriptionResponse } from "@/interfaces";
 
 interface Pros {
   headers: string[];
-  data: any[];
+  data: SubscriptionResponse[];
   textButton: string;
   totalResult: number;
 }
@@ -30,7 +30,7 @@ export default function TableSuscription({
   totalResult,
 }: Pros) {
   const itemsPerPage = totalResult;
-  const totalPages = Math.ceil(invoices.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {
@@ -45,7 +45,7 @@ export default function TableSuscription({
   const [currentPage, setCurrentPage] = useState(1);
 
   // Filtrar las facturas según la página actual
-  const currentInvoices = invoices.slice(
+  const currentInvoices = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -113,14 +113,13 @@ export default function TableSuscription({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentInvoices.map((invoice: any) => (
-                <TableRow key={invoice.invoice}>
-                  <TableCell className="font-medium">
-                    {invoice.invoice}
-                  </TableCell>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.paymentMethod}</TableCell>
-                  <TableCell>{invoice.totalAmount}</TableCell>
+              {currentInvoices.map((invoice) => (
+                <TableRow key={invoice.id}>
+                  <TableCell className="font-medium">{invoice.id}</TableCell>
+                  <TableCell>{invoice.date}</TableCell>
+                  <TableCell>{invoice.price}</TableCell>
+                  <TableCell>{invoice.type}</TableCell>
+                  <TableCell>{invoice.client}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
