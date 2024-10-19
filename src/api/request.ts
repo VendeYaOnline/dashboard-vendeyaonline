@@ -40,3 +40,7 @@ export const getAllSubscription = async () => {
 export const createSubscription = async (subscription: Subscription) => {
   return (await axiosConfig.post("/create-suscription", subscription)).data;
 };
+
+export const deleteSubscription = async (id: number) => {
+  return (await axiosConfig.delete(`/delete-suscription/${id}`)).data;
+};

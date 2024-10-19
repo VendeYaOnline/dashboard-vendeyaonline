@@ -139,7 +139,7 @@ export default function TableUsers({
                     <Link href={`/details-user/${invoice.id}`}>
                       <Pencil
                         size={18}
-                        className="cursor-pointer text-[#6c30f7] ml-5"
+                        className="cursor-pointer text-[#6c30f7]"
                         onClick={() => setUser(invoice)}
                       />
                     </Link>

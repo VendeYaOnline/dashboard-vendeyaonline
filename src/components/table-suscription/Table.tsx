@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -12,9 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileText } from "lucide-react";
+import { FileText, Pencil, Trash2 } from "lucide-react";
 import ModalSuscription from "../modal-suscription/ModalSuscription";
 import { SubscriptionResponse } from "@/interfaces";
+import Link from "next/link";
+import ModalDelete from "../modal-delete/ModalDelete";
 
 interface Pros {
   headers: string[];
@@ -31,10 +33,16 @@ export default function TableSuscription({
 }: Pros) {
   const itemsPerPage = totalResult;
   const totalPages = Math.ceil(data.length / itemsPerPage);
+  const [openModalDelete, setOpenModalDetele] = useState(false);
+  const idElement = useRef(0);
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {
     setOpenModal(false);
+  };
+
+  const onCloseDelete = () => {
+    setOpenModalDetele(false);
   };
 
   const onOpen = () => {
@@ -102,6 +110,11 @@ export default function TableSuscription({
       </Button>
       <Card className="p-5">
         <ModalSuscription active={openModal} onClose={onClose} />
+        <ModalDelete
+          active={openModalDelete}
+          onClose={onCloseDelete}
+          idElement={idElement.current}
+        />
         {data.length ? (
           <TableUi>
             <TableCaption>{renderPagination()}</TableCaption>
@@ -120,6 +133,24 @@ export default function TableSuscription({
                   <TableCell>{invoice.price}</TableCell>
                   <TableCell>{invoice.type}</TableCell>
                   <TableCell>{invoice.client}</TableCell>
+                  <TableCell className="text-base flex">
+                    <Link href={`/details-subscriptions/${invoice.id}`}>
+                      <Pencil
+                        size={18}
+                        className="cursor-pointer text-[#6c30f7]"
+                        // onClick={() => setUser(invoice)}
+                      />
+                    </Link>
+
+                    <Trash2
+                      size={18}
+                      className="cursor-pointer text-[#f7304a] ml-5"
+                      onClick={() => {
+                        setOpenModalDetele(true),
+                          (idElement.current = invoice.id);
+                      }}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -5,6 +5,7 @@ import {
   registerUser,
   deleteUser,
   createSubscription,
+  deleteSubscription,
 } from "./request";
 
 // * USERS
@@ -29,4 +30,8 @@ export const mutationDeleteUser = () => {
 
 export const mutationSubscription = () => {
   return useMutation(createSubscription);
+};
+
+export const mutationDeleteSubscription = () => {
+  return useMutation(deleteSubscription);
 };
