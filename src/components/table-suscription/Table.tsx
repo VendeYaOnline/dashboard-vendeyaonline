@@ -17,6 +17,7 @@ import ModalSuscription from "../modal-suscription/ModalSuscription";
 import { SubscriptionResponse } from "@/interfaces";
 import Link from "next/link";
 import ModalDelete from "../modal-delete/ModalDelete";
+import { useSubscription } from "@/hooks/useSubscription";
 
 interface Pros {
   headers: string[];
@@ -35,6 +36,7 @@ export default function TableSuscription({
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const [openModalDelete, setOpenModalDetele] = useState(false);
   const idElement = useRef(0);
+  const { setSubscription } = useSubscription();
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {
@@ -134,11 +136,11 @@ export default function TableSuscription({
                   <TableCell>{invoice.type}</TableCell>
                   <TableCell>{invoice.client}</TableCell>
                   <TableCell className="text-base flex">
-                    <Link href={`/details-subscriptions/${invoice.id}`}>
+                    <Link href={`/details-subscription/${invoice.id}`}>
                       <Pencil
                         size={18}
                         className="cursor-pointer text-[#6c30f7]"
-                        // onClick={() => setUser(invoice)}
+                        onClick={() => setSubscription(invoice)}
                       />
                     </Link>
 

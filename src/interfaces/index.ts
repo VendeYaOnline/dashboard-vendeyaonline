@@ -27,6 +27,13 @@ export interface Subscription {
   client: number;
 }
 
+export interface SubscriptionUpdated {
+  price?: number;
+  type?: string;
+  date?: string;
+  client?: number;
+}
+
 export interface SubscriptionResponse {
   id: number;
   price: number;

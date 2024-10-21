@@ -144,14 +144,16 @@ export default function TableUsers({
                       />
                     </Link>
 
-                    <Trash2
-                      size={18}
-                      className="cursor-pointer text-[#f7304a] ml-5"
-                      onClick={() => {
-                        setOpenModalDetele(true),
-                          (idElement.current = invoice.id);
-                      }}
-                    />
+                    {invoice.email !== "colinparrado@gmail.com" && (
+                      <Trash2
+                        size={18}
+                        className="cursor-pointer text-[#f7304a] ml-5"
+                        onClick={() => {
+                          setOpenModalDetele(true),
+                            (idElement.current = invoice.id);
+                        }}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

@@ -186,14 +186,14 @@ const DetailsUser = () => {
                 type="button"
                 className="mt-5 w-[300px] font-light p-5"
               >
-                Editar campos
+                {isLoading ? "Cargando..." : "Editar campos"}
               </Button>
             )}
 
             {!disabled && (
               <div className="flex gap-4 items-center mt-5">
                 <Button type="submit" className="w-[300px] font-light p-5">
-                  {isLoading ? "cargando" : "Guardar campos"}
+                  Guardar campos
                 </Button>
                 <Button
                   type="button"

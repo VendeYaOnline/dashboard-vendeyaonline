@@ -1,4 +1,10 @@
-import { Inputs, Subscription, SubscriptionResponse, User } from "@/interfaces";
+import {
+  Inputs,
+  Subscription,
+  SubscriptionResponse,
+  SubscriptionUpdated,
+  User,
+} from "@/interfaces";
 import { axiosConfig } from "./config";
 
 interface Props {
@@ -41,6 +47,13 @@ export const createSubscription = async (subscription: Subscription) => {
   return (await axiosConfig.post("/create-suscription", subscription)).data;
 };
 
-export const deleteSubscription = async (id: number) => {
-  return (await axiosConfig.delete(`/delete-suscription/${id}`)).data;
+export const updatedSubscription = async ({
+  id,
+  subscription,
+}: {
+  id: string;
+  subscription: SubscriptionUpdated;
+}) => {
+  return (await axiosConfig.put(`/updated-suscription/${id}`, subscription))
+    .data;
 };

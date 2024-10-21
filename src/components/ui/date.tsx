@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -12,14 +11,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useEffect, useState } from "react";
 
 interface Pros {
   setValue: any;
+  disabled?: boolean;
+  value?: Date;
 }
 
-export function DatePicker({ setValue }: Pros) {
-  const [date, setDate] = React.useState<Date>();
-  const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
+export function DatePicker({ value, setValue, disabled = false }: Pros) {
+  const [date, setDate] = useState<Date | undefined>(value);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const change = (value: boolean) => {
     setIsCalendarOpen(value);
@@ -29,10 +31,17 @@ export function DatePicker({ setValue }: Pros) {
     setIsCalendarOpen(false);
   };
 
+  useEffect(() => {
+    if (value) {
+      setDate(value);
+    }
+  }, [value]);
+
   return (
     <Popover open={isCalendarOpen} onOpenChange={change}>
       <PopoverTrigger asChild>
         <Button
+          disabled={disabled}
           variant={"outline"}
           className={cn(
             "justify-start text-left font-normal p-5 focus:ring-1 focus:ring-indigo-600",
