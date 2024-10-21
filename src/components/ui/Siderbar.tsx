@@ -17,27 +17,12 @@ import { useTitle } from "@/hooks/useTitle";
 import { useEffect, useState } from "react";
 import { getTitle } from "@/utils";
 
-/* const menuItems = [
-  { name: "Dashboard", icon: LayoutDashboard, href: "/" },
-  { name: "Orders", icon: ShoppingCart, href: "/orders" },
-  { name: "Products", icon: Package, href: "/products" },
-  { name: "Customers", icon: Users, href: "/customers" },
-  { name: "Analytics", icon: BarChart2, href: "/analytics" },
-  { name: "Marketing", icon: MessageSquare, href: "/marketing" },
-]; */
-
 const menuItems = [
   { name: "Suscripciones", icon: Wallet, href: "/" },
   { name: "Cancelaciones", icon: OctagonX, href: "/cancellations" },
   { name: "Formulario", icon: Notebook, href: "/form" },
   { name: "Usuarios", icon: Users, href: "/users" },
 ];
-
-/* const salesChannelItems = [
-  { name: "Integrations", icon: GitBranch, href: "/integrations" },
-  { name: "My Store", icon: Store, href: "/my-store" },
-  { name: "Discounts", icon: Tag, href: "/discounts" },
-]; */
 
 const bottomMenuItems = [
   { name: "Settings", icon: Settings, href: "/settings" },
@@ -53,6 +38,9 @@ export default function Sidebar() {
     const title = getTitle(pathname);
     setTitle(title);
   }, []);
+
+  console.log("pathname", pathname);
+  console.log("pathname", pathname);
 
   return (
     <div className="flex flex-col h-screen w-64 bg-white border-r">
@@ -82,7 +70,11 @@ export default function Sidebar() {
                 href={item.href}
                 onClick={() => setTitle(item.name)}
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm mb-1 ${
-                  pathname === item.href
+                  pathname === item.href ||
+                  (item.href === "/" &&
+                    pathname.includes("/details-subscription")) ||
+                  (item.href === "/cancellations" &&
+                    pathname.includes("/details-cancellations"))
                     ? "bg-indigo-100 text-indigo-600 font-medium"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
