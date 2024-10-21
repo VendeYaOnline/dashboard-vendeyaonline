@@ -1,22 +1,34 @@
 "use client";
 
-import { mutationDeleteSubscription } from "@/api/mutation";
+import {
+  mutationDeleteCancellations,
+  mutationDeleteSubscription,
+} from "@/api/mutation";
 import { Button } from "../ui";
 import classes from "./ModalDeleteSubscription.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
-import { subscriptionsQuery } from "@/api/queries";
+import { cancellationsQuery, subscriptionsQuery } from "@/api/queries";
 
 interface Props {
   active: boolean;
   onClose: () => void;
   idElement: number;
-  isDelete: boolean;
+  type: "subscriptions" | "cancellations";
 }
 
-const ModalDeleteSubscription = ({ active, onClose, idElement }: Props) => {
-  const { mutateAsync, isLoading } = mutationDeleteSubscription();
-  const { refetch } = subscriptionsQuery();
+const ModalDeleteSubscription = ({
+  active,
+  onClose,
+  idElement,
+  type,
+}: Props) => {
+  const { mutateAsync, isLoading } =
+    type === "subscriptions"
+      ? mutationDeleteSubscription()
+      : mutationDeleteCancellations();
+  const { refetch } =
+    type === "subscriptions" ? subscriptionsQuery() : cancellationsQuery();
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -34,7 +46,7 @@ const ModalDeleteSubscription = ({ active, onClose, idElement }: Props) => {
       toast.success("Elemento eliminado");
       onClose();
     } catch (error) {
-      toast.error("Usuario no encontrado");
+      toast.error("Elemento no encontrado");
     }
   };
 

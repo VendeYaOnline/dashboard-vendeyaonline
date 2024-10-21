@@ -7,6 +7,9 @@ import {
   createSubscription,
   updatedSubscription,
   deleteSubscription,
+  createCancellations,
+  updatedCancellation,
+  deleteCancellation,
 } from "./request";
 
 // * USERS
@@ -33,10 +36,22 @@ export const mutationSubscription = () => {
   return useMutation(createSubscription);
 };
 
+export const mutationCancellations = () => {
+  return useMutation(createCancellations);
+};
+
 export const mutationDeleteSubscription = () => {
   return useMutation(deleteSubscription);
 };
 
+export const mutationDeleteCancellations = () => {
+  return useMutation(deleteCancellation);
+};
+
 export const mutationUpdatedSubscription = () => {
   return useMutation(updatedSubscription);
+};
+
+export const mutationCancellationsSubscription = () => {
+  return useMutation(updatedCancellation);
 };

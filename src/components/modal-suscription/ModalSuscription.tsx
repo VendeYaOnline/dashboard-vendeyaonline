@@ -16,8 +16,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import toast from "react-hot-toast";
-import { subscriptionsQuery, userQuery } from "@/api/queries";
-import { mutationSubscription } from "@/api/mutation";
+import {
+  cancellationsQuery,
+  subscriptionsQuery,
+  userQuery,
+} from "@/api/queries";
+import { mutationCancellations, mutationSubscription } from "@/api/mutation";
 import { formatDateText } from "@/utils";
 
 type Inputs = {
@@ -29,6 +33,7 @@ type Inputs = {
 
 interface Props {
   active: boolean;
+  type: "subscriptions" | "cancellations";
   onClose: () => void;
 }
 
@@ -41,10 +46,12 @@ const schema = yup
   })
   .required();
 
-const ModalSuscription = ({ active, onClose }: Props) => {
+const ModalSuscription = ({ active, onClose, type }: Props) => {
   const { data } = userQuery();
-  const { refetch } = subscriptionsQuery();
-  const { mutateAsync, isLoading } = mutationSubscription();
+  const { refetch } =
+    type === "subscriptions" ? subscriptionsQuery() : cancellationsQuery();
+  const { mutateAsync, isLoading } =
+    type === "subscriptions" ? mutationSubscription() : mutationCancellations();
   const {
     register,
     handleSubmit,
@@ -100,7 +107,9 @@ const ModalSuscription = ({ active, onClose }: Props) => {
                 onClose(), reset();
               }}
             />
-            <h1 className="mb-2 font-bold">Sucripción</h1>
+            <h1 className="mb-2 font-bold">
+              {type === "subscriptions" ? "Sucripción" : "Cancelación"}{" "}
+            </h1>
             <div className="flex flex-col gap-1">
               <label id="price" className="text-sm">
                 Precio

@@ -10,6 +10,7 @@ export default function Home() {
     <h1>Cargando</h1>
   ) : (
     <TableSuscription
+      type="subscriptions"
       data={data || []}
       headers={headers}
       textButton="Crear suscripción"

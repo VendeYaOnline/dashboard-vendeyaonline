@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { mutationUpdatedSubscription } from "@/api/mutation";
+import {
+  mutationCancellationsSubscription,
+  mutationUpdatedSubscription,
+} from "@/api/mutation";
 import { ArrowLeft } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import {
@@ -37,10 +40,10 @@ const schema = yup
   })
   .required();
 
-const DetailsSubscription = () => {
+const CancellationsSubscription = () => {
   const { subscription } = useSubscription();
   const [disabled, setDisabled] = useState(true);
-  const { mutateAsync, isLoading } = mutationUpdatedSubscription();
+  const { mutateAsync, isLoading } = mutationCancellationsSubscription();
   const params = useParams();
   const navigate = useRouter();
   const {
@@ -60,7 +63,7 @@ const DetailsSubscription = () => {
     if (subscription) {
       fillFields(subscription);
     } else {
-      navigate.push("/");
+      navigate.push("/cancellations");
     }
   }, [subscription]);
 
@@ -75,9 +78,9 @@ const DetailsSubscription = () => {
           price: Number(data.price),
         },
       });
-      toast.success("Suscripción actualizada");
+      toast.success("Cancelación actualizada");
       setTimeout(() => {
-        navigate.push("/");
+        navigate.push("/cancellations");
       }, 1300);
     } catch (error) {
       console.log("error-password", error);
@@ -87,7 +90,7 @@ const DetailsSubscription = () => {
   return (
     subscription && (
       <div>
-        <Link href="/">
+        <Link href="/cancellations">
           <Button variant="outline">
             <ArrowLeft size={18} className="mr-1" />
             Atras
@@ -191,4 +194,4 @@ const DetailsSubscription = () => {
   );
 };
 
-export default DetailsSubscription;
+export default CancellationsSubscription;

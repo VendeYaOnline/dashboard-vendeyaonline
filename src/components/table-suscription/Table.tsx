@@ -16,19 +16,20 @@ import { FileText, Pencil, Trash2 } from "lucide-react";
 import ModalSuscription from "../modal-suscription/ModalSuscription";
 import { SubscriptionResponse } from "@/interfaces";
 import Link from "next/link";
-import ModalDelete from "../modal-delete/ModalDelete";
 import { useSubscription } from "@/hooks/useSubscription";
 import ModalDeleteSubscription from "../modal-delete-subscription/ModalDeleteSubscription";
 
 interface Pros {
   headers: string[];
   data: SubscriptionResponse[];
+  type: "subscriptions" | "cancellations";
   textButton: string;
   totalResult: number;
 }
 
 export default function TableSuscription({
   data,
+  type,
   headers,
   textButton,
   totalResult,
@@ -112,9 +113,9 @@ export default function TableSuscription({
         {textButton}
       </Button>
       <Card className="p-5">
-        <ModalSuscription active={openModal} onClose={onClose} />
+        <ModalSuscription active={openModal} onClose={onClose} type={type} />
         <ModalDeleteSubscription
-          isDelete={false}
+          type={type}
           active={openModalDelete}
           onClose={onCloseDelete}
           idElement={idElement.current}
@@ -138,7 +139,13 @@ export default function TableSuscription({
                   <TableCell>{invoice.type}</TableCell>
                   <TableCell>{invoice.client}</TableCell>
                   <TableCell className="text-base flex">
-                    <Link href={`/details-subscription/${invoice.id}`}>
+                    <Link
+                      href={
+                        type === "subscriptions"
+                          ? `/details-subscription/${invoice.id}`
+                          : `/details-cancellations/${invoice.id}`
+                      }
+                    >
                       <Pencil
                         size={18}
                         className="cursor-pointer text-[#6c30f7]"

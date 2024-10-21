@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getUsers, getAllSubscription } from "./request";
+import { getUsers, getAllSubscription, getAllCancellations } from "./request";
 
 // * USERS
 export const userQuery = () => {
@@ -10,4 +10,8 @@ export const userQuery = () => {
 
 export const subscriptionsQuery = () => {
   return useQuery("subscriptions", getAllSubscription);
+};
+
+export const cancellationsQuery = () => {
+  return useQuery("cancellations", getAllCancellations);
 };
