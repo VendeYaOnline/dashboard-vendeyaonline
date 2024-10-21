@@ -57,3 +57,7 @@ export const updatedSubscription = async ({
   return (await axiosConfig.put(`/updated-suscription/${id}`, subscription))
     .data;
 };
+
+export const deleteSubscription = async (id: number) => {
+  return (await axiosConfig.delete(`/delete-suscription/${id}`)).data;
+};

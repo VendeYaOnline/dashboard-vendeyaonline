@@ -18,6 +18,7 @@ import { SubscriptionResponse } from "@/interfaces";
 import Link from "next/link";
 import ModalDelete from "../modal-delete/ModalDelete";
 import { useSubscription } from "@/hooks/useSubscription";
+import ModalDeleteSubscription from "../modal-delete-subscription/ModalDeleteSubscription";
 
 interface Pros {
   headers: string[];
@@ -112,7 +113,8 @@ export default function TableSuscription({
       </Button>
       <Card className="p-5">
         <ModalSuscription active={openModal} onClose={onClose} />
-        <ModalDelete
+        <ModalDeleteSubscription
+          isDelete={false}
           active={openModalDelete}
           onClose={onCloseDelete}
           idElement={idElement.current}

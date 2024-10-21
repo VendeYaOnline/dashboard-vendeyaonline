@@ -141,8 +141,6 @@ const DetailsSubscription = () => {
                 </Select>
               </div>
             </div>
-
-            {}
             <div className="w-full flex gap-3 flex-col">
               <div className="mt-5 flex flex-col gap-2">
                 <label id="date" className="text-sm">
