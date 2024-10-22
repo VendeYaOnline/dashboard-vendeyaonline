@@ -62,7 +62,7 @@ const DetailsSubscription = () => {
     } else {
       navigate.push("/");
     }
-  }, [subscription, navigate, fillFields]);
+  }, [subscription, navigate]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
