@@ -52,7 +52,6 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
     reset,
     watch,
     setValue,
-
     formState: { errors },
   } = useForm<InputsSubscription>({
     resolver: yupResolver<InputsSubscription>(schema),

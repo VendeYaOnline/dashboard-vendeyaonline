@@ -8,8 +8,8 @@ import { CircleX } from "lucide-react";
 import { Input } from "../ui/input";
 
 import toast from "react-hot-toast";
-import { mutationForm, mutationRegisterUser } from "@/api/mutation";
-import { formsQuery, userQuery } from "@/api/queries";
+import { mutationForm } from "@/api/mutation";
+import { formsQuery } from "@/api/queries";
 import { InputsForm } from "@/interfaces";
 import { Textarea } from "../ui/textarea";
 
