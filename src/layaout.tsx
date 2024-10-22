@@ -31,7 +31,7 @@ const Layout = ({ children }: Prop) => {
         console.log("Error al verificar el token");
       }
     }
-  }, []);
+  }, [route]);
 
   return (
     <QueryClientProvider client={queryClient}>

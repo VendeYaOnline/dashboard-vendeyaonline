@@ -70,7 +70,7 @@ const DetailsForm = () => {
     } else {
       navigate.push("/users");
     }
-  }, [form,navigate]);
+  }, [form, navigate, fillFields]);
 
   const onSubmit: SubmitHandler<InputsForm> = async (data) => {
     try {

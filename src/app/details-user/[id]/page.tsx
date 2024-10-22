@@ -54,7 +54,7 @@ const DetailsUser = () => {
     } else {
       navigate.push("/users");
     }
-  }, [user]);
+  }, [user, navigate, fillFields]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
