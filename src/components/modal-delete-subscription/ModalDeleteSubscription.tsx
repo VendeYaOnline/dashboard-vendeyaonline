@@ -17,18 +17,21 @@ interface Props {
   type: "subscriptions" | "cancellations";
 }
 
-const ModalDeleteSubscription = ({
-  active,
-  onClose,
-  idElement,
-  type,
-}: Props) => {
+const ModalDeleteSubscription = ({ active, onClose, idElement, type }: Props) => {
+  // Siempre llamar a los hooks, sin importar el tipo
+  const mutationDeleteSubscription = useMutationDeleteSubscription();
+  const mutationDeleteCancellations = useMutationDeleteCancellations();
+  const subscriptionsQuery = useSubscriptionsQuery();
+  const cancellationsQuery = useCancellationsQuery();
+
+  // Luego determinar cuál usar
   const { mutateAsync, isLoading } =
     type === "subscriptions"
-      ? useMutationDeleteSubscription()
-      : useMutationDeleteCancellations();
+      ? mutationDeleteSubscription
+      : mutationDeleteCancellations;
+
   const { refetch } =
-    type === "subscriptions" ? useSubscriptionsQuery() : useCancellationsQuery();
+    type === "subscriptions" ? subscriptionsQuery : cancellationsQuery;
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -73,5 +76,6 @@ const ModalDeleteSubscription = ({
     )
   );
 };
+
 
 export default ModalDeleteSubscription;

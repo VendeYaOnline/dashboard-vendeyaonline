@@ -21,7 +21,10 @@ import {
   useSubscriptionsQuery,
   useUserQuery,
 } from "@/api/queries";
-import { useMutationCancellations, useMutationSubscription } from "@/api/mutation";
+import {
+  useMutationCancellations,
+  useMutationSubscription,
+} from "@/api/mutation";
 import { formatDateText } from "@/utils";
 import { InputsSubscription } from "@/interfaces";
 
@@ -42,10 +45,22 @@ const schema = yup
 
 const ModalSuscription = ({ active, onClose, type }: Props) => {
   const { data } = useUserQuery();
+
+  // Llamar a ambos hooks para cumplir con la regla de los hooks
+  const subscriptionsQuery = useSubscriptionsQuery();
+  const cancellationsQuery = useCancellationsQuery();
+
+  // Elegir el que necesitas según el tipo
   const { refetch } =
-    type === "subscriptions" ? useSubscriptionsQuery() : useCancellationsQuery();
+    type === "subscriptions" ? subscriptionsQuery : cancellationsQuery;
+
+  const mutationSubscription = useMutationSubscription();
+  const mutationCancellations = useMutationCancellations();
+
+  // Elegir la mutación según el tipo
   const { mutateAsync, isLoading } =
-    type === "subscriptions" ? useMutationSubscription() : useMutationCancellations();
+    type === "subscriptions" ? mutationSubscription : mutationCancellations;
+
   const {
     register,
     handleSubmit,
