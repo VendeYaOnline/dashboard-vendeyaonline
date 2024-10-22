@@ -9,10 +9,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  mutationCancellationsSubscription,
-  mutationUpdatedSubscription,
-} from "@/api/mutation";
+import { mutationCancellationsSubscription } from "@/api/mutation";
 import { ArrowLeft } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import {

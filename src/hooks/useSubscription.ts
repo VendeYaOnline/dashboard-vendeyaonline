@@ -1,4 +1,4 @@
-import { Subscription, User } from "@/interfaces";
+import { Subscription } from "@/interfaces";
 import { create } from "zustand";
 
 interface Props {

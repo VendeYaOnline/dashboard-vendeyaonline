@@ -23,13 +23,7 @@ import {
 } from "@/api/queries";
 import { mutationCancellations, mutationSubscription } from "@/api/mutation";
 import { formatDateText } from "@/utils";
-
-type Inputs = {
-  price: string;
-  type: string;
-  date: Date;
-  client: string;
-};
+import { InputsSubscription } from "@/interfaces";
 
 interface Props {
   active: boolean;
@@ -60,7 +54,9 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
     setValue,
 
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver<Inputs>(schema) });
+  } = useForm<InputsSubscription>({
+    resolver: yupResolver<InputsSubscription>(schema),
+  });
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -71,7 +67,7 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
     e.stopPropagation();
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<InputsSubscription> = async (data) => {
     try {
       await mutateAsync({
         ...data,

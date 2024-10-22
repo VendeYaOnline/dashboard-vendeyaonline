@@ -62,3 +62,10 @@ export interface InputsForm {
   phone: string;
   message: string;
 }
+
+export interface InputsSubscription {
+  price: string;
+  type: string;
+  date: Date;
+  client?: string;
+}

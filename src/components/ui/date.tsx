@@ -12,9 +12,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
+import { UseFormSetValue } from "react-hook-form";
+import { Inputs, InputsSubscription } from "@/interfaces";
 
 interface Pros {
-  setValue: any;
+  setValue: UseFormSetValue<InputsSubscription>;
   disabled?: boolean;
   value?: Date;
 }
@@ -62,8 +64,10 @@ export function DatePicker({ value, setValue, disabled = false }: Pros) {
           mode="single"
           selected={date}
           onSelect={(date) => {
-            setDate(date), onClose();
-            setValue("date", date);
+            if (date) {
+              setDate(date), onClose();
+              setValue("date", date);
+            }
           }}
           initialFocus
         />
