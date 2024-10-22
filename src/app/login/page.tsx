@@ -20,7 +20,7 @@ const Login = () => {
       setActiveLogin(false);
       router.push("/");
     }
-  }, []);
+  }, [router]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

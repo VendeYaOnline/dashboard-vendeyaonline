@@ -37,7 +37,7 @@ export default function Sidebar() {
   useEffect(() => {
     const title = getTitle(pathname);
     setTitle(title);
-  }, []);
+  }, [pathname, setTitle]);
 
   return (
     <div className="flex flex-col h-screen w-64 bg-white border-r">

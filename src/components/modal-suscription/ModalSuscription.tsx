@@ -17,7 +17,7 @@ import {
 } from "../ui/select";
 import toast from "react-hot-toast";
 import {
-  cancellationsQuery,
+  useCancellationsQuery,
   useSubscriptionsQuery,
   useUserQuery,
 } from "@/api/queries";
@@ -43,7 +43,7 @@ const schema = yup
 const ModalSuscription = ({ active, onClose, type }: Props) => {
   const { data } = useUserQuery();
   const { refetch } =
-    type === "subscriptions" ? useSubscriptionsQuery() : cancellationsQuery();
+    type === "subscriptions" ? useSubscriptionsQuery() : useCancellationsQuery();
   const { mutateAsync, isLoading } =
     type === "subscriptions" ? useMutationSubscription() : useMutationCancellations();
   const {

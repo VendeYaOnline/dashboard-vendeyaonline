@@ -62,7 +62,7 @@ const CancellationsSubscription = () => {
     } else {
       navigate.push("/cancellations");
     }
-  }, [subscription]);
+  }, [subscription,navigate]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {

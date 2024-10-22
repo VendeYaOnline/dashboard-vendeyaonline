@@ -17,7 +17,7 @@ export const useSubscriptionsQuery = () => {
   return useQuery("subscriptions", getAllSubscription);
 };
 
-export const cancellationsQuery = () => {
+export const useCancellationsQuery = () => {
   return useQuery("cancellations", getAllCancellations);
 };
 

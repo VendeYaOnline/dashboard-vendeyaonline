@@ -8,7 +8,7 @@ import { Button } from "../ui";
 import classes from "./ModalDeleteSubscription.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
-import { cancellationsQuery, useSubscriptionsQuery } from "@/api/queries";
+import { useCancellationsQuery, useSubscriptionsQuery } from "@/api/queries";
 
 interface Props {
   active: boolean;
@@ -28,7 +28,7 @@ const ModalDeleteSubscription = ({
       ? useMutationDeleteSubscription()
       : useMutationDeleteCancellations();
   const { refetch } =
-    type === "subscriptions" ? useSubscriptionsQuery() : cancellationsQuery();
+    type === "subscriptions" ? useSubscriptionsQuery() : useCancellationsQuery();
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
