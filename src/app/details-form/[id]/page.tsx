@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { mutationUpdatedForm } from "@/api/mutation";
+import { useMutationUpdatedForm } from "@/api/mutation";
 import { ArrowLeft } from "lucide-react";
 import { useForms } from "@/hooks/useForm";
 import { Textarea } from "@/components/ui/textarea";
@@ -46,7 +46,7 @@ const schema = yup
 const DetailsForm = () => {
   const { form } = useForms();
   const [disabled, setDisabled] = useState(true);
-  const { mutateAsync, isLoading } = mutationUpdatedForm();
+  const { mutateAsync, isLoading } = useMutationUpdatedForm();
   const { id } = useParams();
   const navigate = useRouter();
   const {

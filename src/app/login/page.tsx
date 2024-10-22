@@ -1,6 +1,6 @@
 "use client";
 
-import { mutationLoginUser } from "@/api/mutation";
+import { useMutationLoginUser } from "@/api/mutation";
 import { Button, Card } from "@/components/ui";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ const Login = () => {
   const [activeLogin, setActiveLogin] = useState(true);
   const [values, setValues] = useState({ email: "", password: "" });
   const [isError, setIsError] = useState(false);
-  const { mutateAsync, isLoading } = mutationLoginUser();
+  const { mutateAsync, isLoading } = useMutationLoginUser();
   const router = useRouter();
 
   useEffect(() => {

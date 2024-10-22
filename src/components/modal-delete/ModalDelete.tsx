@@ -1,11 +1,11 @@
 "use client";
 
-import { mutationDeleteUser } from "@/api/mutation";
+import { useMutationDeleteUser } from "@/api/mutation";
 import { Button } from "../ui";
 import classes from "./ModalDelete.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
-import { userQuery } from "@/api/queries";
+import { useUserQuery } from "@/api/queries";
 
 interface Props {
   active: boolean;
@@ -14,8 +14,8 @@ interface Props {
 }
 
 const ModalDelete = ({ active, onClose, idElement }: Props) => {
-  const { mutateAsync, isLoading } = mutationDeleteUser();
-  const { refetch } = userQuery();
+  const { mutateAsync, isLoading } = useMutationDeleteUser();
+  const { refetch } = useUserQuery();
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

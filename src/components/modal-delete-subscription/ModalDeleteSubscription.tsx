@@ -1,14 +1,14 @@
 "use client";
 
 import {
-  mutationDeleteCancellations,
-  mutationDeleteSubscription,
+  useMutationDeleteCancellations,
+  useMutationDeleteSubscription,
 } from "@/api/mutation";
 import { Button } from "../ui";
 import classes from "./ModalDeleteSubscription.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
-import { cancellationsQuery, subscriptionsQuery } from "@/api/queries";
+import { cancellationsQuery, useSubscriptionsQuery } from "@/api/queries";
 
 interface Props {
   active: boolean;
@@ -25,10 +25,10 @@ const ModalDeleteSubscription = ({
 }: Props) => {
   const { mutateAsync, isLoading } =
     type === "subscriptions"
-      ? mutationDeleteSubscription()
-      : mutationDeleteCancellations();
+      ? useMutationDeleteSubscription()
+      : useMutationDeleteCancellations();
   const { refetch } =
-    type === "subscriptions" ? subscriptionsQuery() : cancellationsQuery();
+    type === "subscriptions" ? useSubscriptionsQuery() : cancellationsQuery();
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { mutationUpdatedSubscription } from "@/api/mutation";
+import { useMutationUpdatedSubscription } from "@/api/mutation";
 import { ArrowLeft } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import {
@@ -40,7 +40,7 @@ const schema = yup
 const DetailsSubscription = () => {
   const { subscription } = useSubscription();
   const [disabled, setDisabled] = useState(true);
-  const { mutateAsync, isLoading } = mutationUpdatedSubscription();
+  const { mutateAsync, isLoading } = useMutationUpdatedSubscription();
   const params = useParams();
   const navigate = useRouter();
   const {

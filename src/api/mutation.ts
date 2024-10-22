@@ -17,58 +17,58 @@ import {
 
 // * USERS
 
-export const mutationRegisterUser = () => {
+export const useMutationRegisterUser = () => {
   return useMutation(registerUser);
 };
 
-export const mutationLoginUser = () => {
+export const useMutationLoginUser = () => {
   return useMutation(loginUser);
 };
 
-export const mutationUpdatedUser = () => {
+export const useMutationUpdatedUser = () => {
   return useMutation(updatedUser);
 };
 
-export const mutationDeleteUser = () => {
+export const useMutationDeleteUser = () => {
   return useMutation(deleteUser);
 };
 
 // * SUBSCRIPTION
 
-export const mutationSubscription = () => {
+export const useMutationSubscription = () => {
   return useMutation(createSubscription);
 };
 
-export const mutationCancellations = () => {
+export const useMutationCancellations = () => {
   return useMutation(createCancellations);
 };
 
-export const mutationDeleteSubscription = () => {
+export const useMutationDeleteSubscription = () => {
   return useMutation(deleteSubscription);
 };
 
-export const mutationDeleteCancellations = () => {
+export const useMutationDeleteCancellations = () => {
   return useMutation(deleteCancellation);
 };
 
-export const mutationUpdatedSubscription = () => {
+export const useMutationUpdatedSubscription = () => {
   return useMutation(updatedSubscription);
 };
 
-export const mutationCancellationsSubscription = () => {
+export const useMutationCancellationsSubscription = () => {
   return useMutation(updatedCancellation);
 };
 
 // * FORM
 
-export const mutationForm = () => {
+export const useMutationForm = () => {
   return useMutation(registerForms);
 };
 
-export const mutationUpdatedForm = () => {
+export const useMutationUpdatedForm = () => {
   return useMutation(updatedForms);
 };
 
-export const mutationDeleteForm = () => {
+export const useMutationDeleteForm = () => {
   return useMutation(deleteForm);
 };

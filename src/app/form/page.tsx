@@ -1,12 +1,12 @@
 "use client";
 
-import { formsQuery } from "@/api/queries";
+import { useFormsQuery } from "@/api/queries";
 import TableForm from "@/components/table-forms/Table";
 import React from "react";
 
 const Form = () => {
   const headers = ["ID", "NOMBRE", "APELLIDO", "EMAIL", "TELÉFONO", "MENSAJE"];
-  const { data, isLoading } = formsQuery();
+  const { data, isLoading } = useFormsQuery();
   return isLoading ? (
     <h1>Cargando</h1>
   ) : (

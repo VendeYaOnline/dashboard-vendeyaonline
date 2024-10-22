@@ -5,7 +5,7 @@ import Header from "../components/ui/Header";
 import Layout from "@/layaout";
 
 export const metadata: Metadata = {
-  title: "VendeYaOnline",
+  title: "Dashboard",
   description: "Panel de administración",
 };
 

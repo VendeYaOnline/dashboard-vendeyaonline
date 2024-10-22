@@ -1,11 +1,11 @@
 "use client";
 
-import { mutationDeleteForm } from "@/api/mutation";
+import { useMutationDeleteForm } from "@/api/mutation";
 import { Button } from "../ui";
 import classes from "./ModalDeleteForm.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
-import { formsQuery } from "@/api/queries";
+import { useFormsQuery } from "@/api/queries";
 
 interface Props {
   active: boolean;
@@ -14,8 +14,8 @@ interface Props {
 }
 
 const ModalDeleteForm = ({ active, onClose, idElement }: Props) => {
-  const { mutateAsync, isLoading } = mutationDeleteForm();
-  const { refetch } = formsQuery();
+  const { mutateAsync, isLoading } = useMutationDeleteForm();
+  const { refetch } = useFormsQuery();
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

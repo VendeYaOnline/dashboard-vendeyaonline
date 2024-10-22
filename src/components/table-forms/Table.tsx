@@ -13,11 +13,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { FileText, Pencil, Trash2 } from "lucide-react";
-import ModalSuscription from "../modal-suscription/ModalSuscription";
-import { Form, SubscriptionResponse } from "@/interfaces";
+import { Form } from "@/interfaces";
 import Link from "next/link";
 import { useSubscription } from "@/hooks/useSubscription";
-import ModalDeleteSubscription from "../modal-delete-subscription/ModalDeleteSubscription";
 import { useForms } from "@/hooks/useForm";
 import ModalDeleteForm from "../modal-delete-form/ModalDeleteForm";
 import ModalForm from "../modal-form/ModalForm";
@@ -40,7 +38,6 @@ export default function TableForm({
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const [openModalDelete, setOpenModalDetele] = useState(false);
   const idElement = useRef(0);
-  const { setSubscription } = useSubscription();
   const [openModal, setOpenModal] = useState(false);
 
   const onClose = () => {

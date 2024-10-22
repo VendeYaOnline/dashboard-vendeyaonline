@@ -8,8 +8,8 @@ import { CircleX } from "lucide-react";
 import { Input } from "../ui/input";
 
 import toast from "react-hot-toast";
-import { mutationForm } from "@/api/mutation";
-import { formsQuery } from "@/api/queries";
+import { useMutationForm } from "@/api/mutation";
+import { useFormsQuery } from "@/api/queries";
 import { InputsForm } from "@/interfaces";
 import { Textarea } from "../ui/textarea";
 
@@ -47,8 +47,8 @@ const schema = yup
   .required();
 
 const ModalForm = ({ active, onClose }: Props) => {
-  const { mutateAsync, isLoading } = mutationForm();
-  const { refetch } = formsQuery();
+  const { mutateAsync, isLoading } = useMutationForm();
+  const { refetch } = useFormsQuery();
   const {
     register,
     handleSubmit,

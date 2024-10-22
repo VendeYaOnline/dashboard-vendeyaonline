@@ -7,13 +7,13 @@ import {
 } from "./request";
 
 // * USERS
-export const userQuery = () => {
+export const useUserQuery = () => {
   return useQuery("users", getUsers);
 };
 
 // * SUBSCRIPTIONS
 
-export const subscriptionsQuery = () => {
+export const useSubscriptionsQuery = () => {
   return useQuery("subscriptions", getAllSubscription);
 };
 
@@ -23,6 +23,6 @@ export const cancellationsQuery = () => {
 
 // * FORMS
 
-export const formsQuery = () => {
+export const useFormsQuery = () => {
   return useQuery("forms", getAllForms);
 };

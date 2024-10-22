@@ -8,8 +8,8 @@ import { CircleX } from "lucide-react";
 import { Input } from "../ui/input";
 
 import toast from "react-hot-toast";
-import { mutationRegisterUser } from "@/api/mutation";
-import { userQuery } from "@/api/queries";
+import { useMutationRegisterUser } from "@/api/mutation";
+import { useUserQuery } from "@/api/queries";
 
 type Inputs = {
   username: string;
@@ -60,8 +60,8 @@ const schema = yup
   .required();
 
 const ModalUsers = ({ active, onClose }: Props) => {
-  const { mutateAsync, isLoading } = mutationRegisterUser();
-  const { refetch } = userQuery();
+  const { mutateAsync, isLoading } = useMutationRegisterUser();
+  const { refetch } = useUserQuery();
   const {
     register,
     handleSubmit,

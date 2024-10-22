@@ -18,10 +18,10 @@ import {
 import toast from "react-hot-toast";
 import {
   cancellationsQuery,
-  subscriptionsQuery,
-  userQuery,
+  useSubscriptionsQuery,
+  useUserQuery,
 } from "@/api/queries";
-import { mutationCancellations, mutationSubscription } from "@/api/mutation";
+import { useMutationCancellations, useMutationSubscription } from "@/api/mutation";
 import { formatDateText } from "@/utils";
 import { InputsSubscription } from "@/interfaces";
 
@@ -41,11 +41,11 @@ const schema = yup
   .required();
 
 const ModalSuscription = ({ active, onClose, type }: Props) => {
-  const { data } = userQuery();
+  const { data } = useUserQuery();
   const { refetch } =
-    type === "subscriptions" ? subscriptionsQuery() : cancellationsQuery();
+    type === "subscriptions" ? useSubscriptionsQuery() : cancellationsQuery();
   const { mutateAsync, isLoading } =
-    type === "subscriptions" ? mutationSubscription() : mutationCancellations();
+    type === "subscriptions" ? useMutationSubscription() : useMutationCancellations();
   const {
     register,
     handleSubmit,

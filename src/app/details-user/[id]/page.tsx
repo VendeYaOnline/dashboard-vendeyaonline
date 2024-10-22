@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { mutationUpdatedUser } from "@/api/mutation";
+import { useMutationUpdatedUser } from "@/api/mutation";
 import { Inputs } from "@/interfaces";
 import { ArrowLeft } from "lucide-react";
 
@@ -29,7 +29,7 @@ const schema = yup
 const DetailsUser = () => {
   const { user } = useUser();
   const [disabled, setDisabled] = useState(true);
-  const { mutateAsync, isLoading } = mutationUpdatedUser();
+  const { mutateAsync, isLoading } = useMutationUpdatedUser();
   const params = useParams();
   const navigate = useRouter();
   const {
