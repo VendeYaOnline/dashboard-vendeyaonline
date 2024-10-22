@@ -43,3 +43,22 @@ export interface SubscriptionResponse {
   createdat: string;
   updatedat: string;
 }
+
+export interface Form {
+  id: number;
+  name: string;
+  email: string;
+  lastname: string;
+  phone: string;
+  message: string;
+  createdat: string;
+  updatedat: string;
+}
+
+export interface InputsForm {
+  name: string;
+  email: string;
+  lastname: string;
+  phone: string;
+  message: string;
+}

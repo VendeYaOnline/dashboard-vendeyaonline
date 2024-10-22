@@ -39,9 +39,6 @@ export default function Sidebar() {
     setTitle(title);
   }, []);
 
-  console.log("pathname", pathname);
-  console.log("pathname", pathname);
-
   return (
     <div className="flex flex-col h-screen w-64 bg-white border-r">
       <div className="p-4 flex items-center gap-2">
@@ -74,7 +71,10 @@ export default function Sidebar() {
                   (item.href === "/" &&
                     pathname.includes("/details-subscription")) ||
                   (item.href === "/cancellations" &&
-                    pathname.includes("/details-cancellations"))
+                    pathname.includes("/details-cancellations")) ||
+                  (item.href === "/form" &&
+                    pathname.includes("/details-form")) ||
+                  (item.href === "/users" && pathname.includes("/details-user"))
                     ? "bg-indigo-100 text-indigo-600 font-medium"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}

@@ -1,25 +1,17 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import classes from "./ModalUsers.module.css";
+import classes from "./ModalForm.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CircleX } from "lucide-react";
 import { Input } from "../ui/input";
 
 import toast from "react-hot-toast";
-import { mutationRegisterUser } from "@/api/mutation";
-import { userQuery } from "@/api/queries";
-
-type Inputs = {
-  username: string;
-  email: string;
-  password: string;
-  lastname: string;
-  phone: string;
-  department: string;
-  city: string;
-};
+import { mutationForm, mutationRegisterUser } from "@/api/mutation";
+import { formsQuery, userQuery } from "@/api/queries";
+import { InputsForm } from "@/interfaces";
+import { Textarea } from "../ui/textarea";
 
 interface Props {
   active: boolean;
@@ -28,10 +20,16 @@ interface Props {
 
 const schema = yup
   .object({
-    username: yup.string().required("Nombre es requerido"),
+    name: yup.string().required("Nombre es requerido"),
     lastname: yup.string().required("Apellido es requerido"),
-    department: yup.string().required("Departamento es requerido"),
-    city: yup.string().required("Ciudad es requerida"),
+    email: yup
+      .string()
+      .email("Correo electrónico no válido")
+      .required("Correo electrónico es requerido")
+      .matches(
+        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{1,})$/,
+        "Correo electrónico no válido"
+      ),
     phone: yup
       .string()
       .required("Teléfono es requerido")
@@ -41,33 +39,22 @@ const schema = yup
         "El número de teléfono debe tener entre 7 y 10 dígitos",
         (val) => (val ? val.length > 6 && val.length < 11 : false)
       ),
-    email: yup
+    message: yup
       .string()
-      .email("Correo electrónico no válido")
-      .required("Correo electrónico es requerido")
-      .matches(
-        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{1,})$/,
-        "Correo electrónico no válido"
-      ),
-    password: yup
-      .string()
-      .required("Contraseña es requerida")
-      .min(6, "La contraseña debe tener al menos 6 caracteres")
-      .matches(/[A-Z]/, "La contraseña debe tener al menos una letra mayúscula")
-      .matches(/[a-z]/, "La contraseña debe tener al menos una letra minúscula")
-      .matches(/\d/, "La contraseña debe tener al menos un número"),
+      .required("Mensaje es requerido")
+      .min(24, "El mensaje debe tener al menos 24 caracteres"),
   })
   .required();
 
-const ModalUsers = ({ active, onClose }: Props) => {
-  const { mutateAsync, isLoading } = mutationRegisterUser();
-  const { refetch } = userQuery();
+const ModalForm = ({ active, onClose }: Props) => {
+  const { mutateAsync, isLoading } = mutationForm();
+  const { refetch } = formsQuery();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver<Inputs>(schema) });
+  } = useForm<InputsForm>({ resolver: yupResolver<InputsForm>(schema) });
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -78,19 +65,15 @@ const ModalUsers = ({ active, onClose }: Props) => {
     e.stopPropagation();
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<InputsForm> = async (data) => {
     try {
       await mutateAsync(data);
       reset();
       refetch();
       onClose();
-      toast.success("Usuario creado exitosamente");
+      toast.success("mensaje creado exitosamente");
     } catch (error: any) {
-      if (error.response.data.error === '"email" must be a valid email') {
-        toast.error("El email debe ser un correo electrónico válido");
-      } else {
-        toast.error("Error inesperado");
-      }
+      toast.error("Error inesperado");
     }
   };
 
@@ -108,19 +91,19 @@ const ModalUsers = ({ active, onClose }: Props) => {
                 onClose(), reset();
               }}
             />
-            <h1 className="mb-2 font-bold">Usuario</h1>
+            <h1 className="mb-2 font-bold">Formulario</h1>
             <div className="flex flex-col gap-1">
-              <label id="username" className="text-sm">
-                Username
+              <label id="name" className="text-sm">
+                Nombre
               </label>
               <Input
-                id="username"
+                id="name"
                 type="text"
                 placeholder="Yosip"
-                {...register("username")}
+                {...register("name")}
               />
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.username?.message}
+                {errors.name?.message}
               </p>
             </div>
 
@@ -155,21 +138,6 @@ const ModalUsers = ({ active, onClose }: Props) => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label id="password" className="text-sm">
-                Contraseña
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="***"
-                {...register("password")}
-              />
-              <p className="text-left text-xs text-red-600 mt-1">
-                {errors.password?.message}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-1">
               <label id="phone" className="text-sm">
                 Teléfono
               </label>
@@ -185,34 +153,13 @@ const ModalUsers = ({ active, onClose }: Props) => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label id="department" className="text-sm">
-                Departamento
+              <label id="message" className="text-sm">
+                Mensaje
               </label>
-              <Input
-                id="department"
-                type="text"
-                placeholder="Casanare"
-                {...register("department")}
-              />
+              <Textarea id="message" {...register("message")} />
 
               <p className="text-left text-xs text-red-600 mt-1">
-                {errors.department?.message}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label id="city" className="text-sm">
-                Ciudad
-              </label>
-              <Input
-                id="city"
-                type="text"
-                placeholder="Bogotá"
-                {...register("city")}
-              />
-
-              <p className="text-left text-xs text-red-600 mt-1">
-                {errors.city?.message}
+                {errors.message?.message}
               </p>
             </div>
             <div className="flex gap-2">
@@ -221,7 +168,7 @@ const ModalUsers = ({ active, onClose }: Props) => {
                 className={classes["button-modal"]}
                 disabled={isLoading}
               >
-                {isLoading ? <div className="spiner" /> : "Crear usuario"}
+                {isLoading ? <div className="spiner" /> : "Crear formulario"}
               </button>
             </div>
           </div>
@@ -231,4 +178,4 @@ const ModalUsers = ({ active, onClose }: Props) => {
   );
 };
 
-export default ModalUsers;
+export default ModalForm;

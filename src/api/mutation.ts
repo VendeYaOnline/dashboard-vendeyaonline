@@ -10,6 +10,9 @@ import {
   createCancellations,
   updatedCancellation,
   deleteCancellation,
+  updatedForms,
+  deleteForm,
+  registerForms,
 } from "./request";
 
 // * USERS
@@ -54,4 +57,18 @@ export const mutationUpdatedSubscription = () => {
 
 export const mutationCancellationsSubscription = () => {
   return useMutation(updatedCancellation);
+};
+
+// * FORM
+
+export const mutationForm = () => {
+  return useMutation(registerForms);
+};
+
+export const mutationUpdatedForm = () => {
+  return useMutation(updatedForms);
+};
+
+export const mutationDeleteForm = () => {
+  return useMutation(deleteForm);
 };

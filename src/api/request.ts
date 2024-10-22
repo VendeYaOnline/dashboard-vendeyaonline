@@ -1,5 +1,7 @@
 import {
+  Form,
   Inputs,
+  InputsForm,
   Subscription,
   SubscriptionResponse,
   SubscriptionUpdated,
@@ -99,4 +101,28 @@ export const deleteSubscription = async (id: number) => {
 
 export const deleteCancellation = async (id: number) => {
   return (await axiosConfig.delete(`/delete-canceled_suscription/${id}`)).data;
+};
+
+// * FORMS
+
+export const getAllForms = async () => {
+  return (await axiosConfig.get<{ forms: Form[] }>("/get-forms")).data.forms;
+};
+
+export const registerForms = async (form: InputsForm) => {
+  return (await axiosConfig.post(`/register-form`, form)).data;
+};
+
+export const updatedForms = async ({
+  id,
+  form,
+}: {
+  id: string;
+  form: InputsForm;
+}) => {
+  return (await axiosConfig.put(`/updated-form/${id}`, form)).data;
+};
+
+export const deleteForm = async (id: number) => {
+  return (await axiosConfig.delete(`/delete-form/${id}`)).data;
 };
