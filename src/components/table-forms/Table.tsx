@@ -141,7 +141,7 @@ export default function TableForm({
                     <Link href={`/details-form/${invoice.id}`}>
                       <Pencil
                         size={18}
-                        className="cursor-pointer text-[#6c30f7]"
+                        className="cursor-pointer text-[#3752ec]"
                         onClick={() => setForm(invoice)}
                       />
                     </Link>
@@ -161,7 +161,7 @@ export default function TableForm({
           </TableUi>
         ) : (
           <div className="p-10 m-auto h-[300px]  text-center flex justify-center items-center gap-4 flex-col">
-            <FileText size={100} color="#4f46e5" />
+            <FileText size={100} color="#3752ec" />
             <h1 className="text-xl">No se encontró contenido</h1>
           </div>
         )}

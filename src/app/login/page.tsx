@@ -39,15 +39,19 @@ const Login = () => {
         setIsError(true);
       }
     } catch (e: any) {
-      const { error } = e.response.data;
-      if (error === "Incorrect password or email") {
-        toast.error("Contraseña o correo electrónico incorrecto");
+      if (e.response?.data) {
+        const { error } = e.response.data;
+        if (error === "Incorrect password or email") {
+          toast.error("Contraseña o correo electrónico incorrecto");
+        }
+      } else {
+        toast.error("Error con el servidor");
       }
     }
   };
 
   return (
-    activeLogin && (
+    !activeLogin && (
       <section className="p-3 absolute left-0 right-0 top-0 h-full bg-white flex justify-center items-center">
         <Card className="w-[500px] sm:max-w-full mt-5 p-5 relative">
           <form onSubmit={handleSubmit}>

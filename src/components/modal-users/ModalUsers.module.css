@@ -51,14 +51,14 @@
 }
 
 .input:focus {
-  border: 1px solid #6c30f7;
+  border: 1px solid #3752ec;
 }
 
 .button-modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #6c30f7;
+  background-color: #3752ec;
   color: white;
   padding: 10px;
   width: 100%;
@@ -68,7 +68,7 @@
 }
 
 .button-modal:hover {
-  background-color: #4313b3;
+  background-color: #2941ca;
 }
 
 @media (max-width: 524px) {

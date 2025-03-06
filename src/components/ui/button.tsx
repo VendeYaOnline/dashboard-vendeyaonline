@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#6c30f7] font-light text-white shadow hover:bg-[#4313b3]", // Color predeterminado
+        default: "bg-blue-700 font-light text-white shadow hover:bg-blue-800", // Color predeterminado
         destructive: "bg-red-600 text-white shadow-sm hover:bg-red-500", // Color destructivo
         outline:
           "border border-gray-300 bg-transparent text-gray-800 shadow-sm hover:bg-gray-100", // Contorno

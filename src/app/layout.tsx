@@ -5,8 +5,8 @@ import Header from "../components/ui/Header";
 import Layout from "@/layaout";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Panel de administración",
+  title: "Panel de administración",
+  description: "Panel de administración de VendeYaOnline",
 };
 
 export default function RootLayout({

@@ -37,6 +37,7 @@ interface Props {
 const schema = yup
   .object({
     price: yup.string().required("Campo obligatorio"),
+    quantityProducts: yup.string().required("Campo obligatorio"),
     type: yup.string().required("Campo obligatorio"),
     date: yup.date().required("Campo obligatorio"),
     client: yup.string().required("Campo obligatorio"),
@@ -86,6 +87,7 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
       await mutateAsync({
         ...data,
         price: Number(data.price),
+        quantityProducts: Number(data.quantityProducts),
         client: Number(data.client),
         date: formatDateText(data.date),
       });
@@ -139,7 +141,7 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
                 Tipo
               </label>
               <Select onValueChange={(value) => setValue("type", value)}>
-                <SelectTrigger className="focus:ring-1 focus:ring-indigo-600 p-5">
+                <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
                   {watch("type") ? (
                     <SelectValue />
                   ) : (
@@ -148,8 +150,9 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="Tienda Online">Tienda Online</SelectItem>
-                    <SelectItem value="Página web">Página web</SelectItem>
+                    <SelectItem value="Emprendedor">Emprendedor</SelectItem>
+                    <SelectItem value="Crecimiento">Crecimiento</SelectItem>
+                    <SelectItem value="Corporativo">Corporativo</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -159,11 +162,25 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
               </p>
             </div>
             <div className="flex flex-col gap-1">
+              <label id="quantityProducts" className="text-sm">
+                Cantidad de prodcutos
+              </label>
+              <Input
+                id="quantityProducts"
+                type="number"
+                placeholder="100"
+                {...register("quantityProducts")}
+              />
+              <p className="text-left text-xs text-red-600 mt-1">
+                {errors.price?.message}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1">
               <label id="client" className="text-sm">
                 Cliente
               </label>
               <Select onValueChange={(value) => setValue("client", value)}>
-                <SelectTrigger className="focus:ring-1 focus:ring-indigo-600 p-5">
+                <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
                   {watch("client") ? (
                     <SelectValue />
                   ) : (

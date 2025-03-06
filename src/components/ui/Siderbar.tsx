@@ -2,16 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Logo from "/public/logo.png";
-import {
-  Users,
-  Settings,
-  HelpCircle,
-  Search,
-  Notebook,
-  Wallet,
-  OctagonX,
-} from "lucide-react";
+import Logo from "/public/logo.svg";
+import { Users, Search, Notebook, Wallet, OctagonX } from "lucide-react";
 import Image from "next/image";
 import { useTitle } from "@/hooks/useTitle";
 import { useEffect, useState } from "react";
@@ -22,11 +14,6 @@ const menuItems = [
   { name: "Cancelaciones", icon: OctagonX, href: "/cancellations" },
   { name: "Formulario", icon: Notebook, href: "/form" },
   { name: "Usuarios", icon: Users, href: "/users" },
-];
-
-const bottomMenuItems = [
-  { name: "Settings", icon: Settings, href: "/settings" },
-  { name: "Help Center", icon: HelpCircle, href: "/help" },
 ];
 
 export default function Sidebar() {
@@ -52,7 +39,7 @@ export default function Sidebar() {
             onChange={(e) => setValueFilter(e.target.value.toLocaleLowerCase())}
             type="text"
             placeholder="Buscar"
-            className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
           />
         </div>
       </div>
@@ -75,7 +62,7 @@ export default function Sidebar() {
                   (item.href === "/form" &&
                     pathname.includes("/details-form")) ||
                   (item.href === "/users" && pathname.includes("/details-user"))
-                    ? "bg-indigo-100 text-indigo-600 font-medium"
+                    ? "bg-indigo-100 text-blue-600 font-medium"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
@@ -103,22 +90,6 @@ export default function Sidebar() {
             </Link>
           ))} 
         </nav> */}
-      </div>
-      <div className="mt-auto px-4 pb-4">
-        {bottomMenuItems.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm mb-1 ${
-              pathname === item.href
-                ? "bg-purple-100 text-purple-600 font-medium"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            <item.icon className="w-5 h-5" />
-            {item.name}
-          </Link>
-        ))}
       </div>
     </div>
   );

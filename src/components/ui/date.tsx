@@ -13,10 +13,16 @@ import {
 } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { Inputs, InputsSubscription } from "@/interfaces";
+
+type Inputs = {
+  price: string;
+  quantityProducts: string;
+  type: string;
+  date: Date;
+};
 
 interface Pros {
-  setValue: UseFormSetValue<InputsSubscription>;
+  setValue: UseFormSetValue<Inputs>;
   disabled?: boolean;
   value?: Date;
 }
@@ -46,7 +52,7 @@ export function DatePicker({ value, setValue, disabled = false }: Pros) {
           disabled={disabled}
           variant={"outline"}
           className={cn(
-            "justify-start text-left font-normal p-5 focus:ring-1 focus:ring-indigo-600",
+            "justify-start text-left font-normal p-5 focus:ring-1 focus:ring-blue-600",
             !date && "text-muted-foreground"
           )}
         >

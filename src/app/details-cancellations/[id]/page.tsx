@@ -25,6 +25,7 @@ import { convertDate, formatDateText } from "@/utils";
 
 type Inputs = {
   price: string;
+  quantityProducts: string;
   type: string;
   date: Date;
 };
@@ -32,6 +33,7 @@ type Inputs = {
 const schema = yup
   .object({
     price: yup.string().required("Campo obligatorio"),
+    quantityProducts: yup.string().required("Campo obligatorio"),
     type: yup.string().required("Campo obligatorio"),
     date: yup.date().required("Campo obligatorio"),
   })
@@ -53,6 +55,7 @@ const CancellationsSubscription = () => {
 
   const fillFields = (subscription: Subscription) => {
     setValue("price", subscription.price.toString());
+    setValue("quantityProducts", subscription.quantityProducts.toString());
     setValue("type", subscription.type);
     setValue("date", new Date(convertDate(subscription.date)));
   };
@@ -62,7 +65,7 @@ const CancellationsSubscription = () => {
     } else {
       navigate.push("/cancellations");
     }
-  }, [subscription, navigate, fillFields]);
+  }, [subscription, navigate]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -73,6 +76,7 @@ const CancellationsSubscription = () => {
           ...data,
           date: formatDateText(data.date),
           price: Number(data.price),
+          quantityProducts: Number(data.quantityProducts),
         },
       });
       toast.success("Cancelación actualizada");
@@ -120,7 +124,7 @@ const CancellationsSubscription = () => {
                   onValueChange={(value) => setValue("type", value)}
                   disabled={disabled}
                 >
-                  <SelectTrigger className="focus:ring-1 focus:ring-indigo-600 p-5">
+                  <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
                     {watch("type") ? (
                       <span>{watch("type")}</span>
                     ) : (
@@ -129,10 +133,9 @@ const CancellationsSubscription = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="Tienda Online">
-                        Tienda Online
-                      </SelectItem>
-                      <SelectItem value="Página web">Página web</SelectItem>
+                      <SelectItem value="Emprendedor">Emprendedor</SelectItem>
+                      <SelectItem value="Crecimiento">Crecimiento</SelectItem>
+                      <SelectItem value="Corporativo">Corporativo</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -152,6 +155,24 @@ const CancellationsSubscription = () => {
                   {errors.date?.message &&
                     !watch("date") &&
                     errors.date?.message}
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full flex gap-3 flex-col">
+              <div className="mt-5 flex flex-col gap-2">
+                <label id="quantityProducts" className="text-sm">
+                  Cantidad de productos
+                </label>
+                <Input
+                  id="quantityProducts"
+                  type="number"
+                  placeholder="100"
+                  disabled={disabled}
+                  {...register("quantityProducts")}
+                />
+                <p className="text-left text-xs text-red-600 mt-1">
+                  {errors.quantityProducts?.message}
                 </p>
               </div>
             </div>

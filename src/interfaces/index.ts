@@ -22,6 +22,7 @@ export type Inputs = {
 
 export interface Subscription {
   price: number;
+  quantityProducts: number;
   type: string;
   date: string;
   client: number;
@@ -29,6 +30,7 @@ export interface Subscription {
 
 export interface SubscriptionUpdated {
   price?: number;
+  quantityProducts?: number;
   type?: string;
   date?: string;
   client?: number;
@@ -37,6 +39,7 @@ export interface SubscriptionUpdated {
 export interface SubscriptionResponse {
   id: number;
   price: number;
+  quantityProducts: number;
   type: string;
   date: string;
   client: number;
@@ -65,6 +68,7 @@ export interface InputsForm {
 
 export interface InputsSubscription {
   price: string;
+  quantityProducts: string;
   type: string;
   date: Date;
   client?: string;
