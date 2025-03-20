@@ -135,7 +135,17 @@ export default function TableSuscription({
                 <TableRow key={invoice.id}>
                   <TableCell className="font-medium">{invoice.id}</TableCell>
                   <TableCell>{invoice.date}</TableCell>
-                  <TableCell>{invoice.price}</TableCell>
+                  <TableCell>
+                    {" "}
+                    {new Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })
+                      .format(invoice.price)
+                      .replace(/\s/g, "")}
+                  </TableCell>
                   <TableCell>{invoice.type}</TableCell>
                   <TableCell>{invoice.quantityProducts || 0}</TableCell>
                   <TableCell>{invoice.client}</TableCell>
