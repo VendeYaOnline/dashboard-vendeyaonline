@@ -27,6 +27,7 @@ type Inputs = {
   price: string;
   quantityProducts: string;
   type: string;
+  status: string;
   date: Date;
 };
 
@@ -35,6 +36,7 @@ const schema = yup
     price: yup.string().required("Campo obligatorio"),
     quantityProducts: yup.string().required("Campo obligatorio"),
     type: yup.string().required("Campo obligatorio"),
+    status: yup.string().required("Campo obligatorio"),
     date: yup.date().required("Campo obligatorio"),
   })
   .required();
@@ -57,6 +59,7 @@ const DetailsSubscription = () => {
     setValue("price", subscription.price.toString());
     setValue("quantityProducts", subscription.quantityProducts.toString());
     setValue("type", subscription.type);
+    setValue("status", subscription.status);
     setValue("date", new Date(convertDate(subscription.date)));
   };
   useEffect(() => {
@@ -116,29 +119,58 @@ const DetailsSubscription = () => {
                 </p>
               </div>
 
-              <div className="mt-5 flex flex-col gap-2">
-                <label id="type" className="text-sm">
-                  Tipo
-                </label>
-                <Select
-                  onValueChange={(value) => setValue("type", value)}
-                  disabled={disabled}
-                >
-                  <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
-                    {watch("type") ? (
-                      <span>{watch("type")}</span>
-                    ) : (
-                      <span className="text-[#9ca3af]">Selecciona el tipo</span>
-                    )}
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="Emprendedor">Emprendedor</SelectItem>
-                      <SelectItem value="Crecimiento">Crecimiento</SelectItem>
-                      <SelectItem value="Corporativo">Corporativo</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+              <div className="flex items-center gap-6">
+                <div className="flex flex-col gap-2 w-full">
+                  <label id="type" className="text-sm">
+                    Tipo
+                  </label>
+                  <Select
+                    onValueChange={(value) => setValue("type", value)}
+                    disabled={disabled}
+                  >
+                    <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
+                      {watch("type") ? (
+                        <span>{watch("type")}</span>
+                      ) : (
+                        <span className="text-[#9ca3af]">
+                          Selecciona el tipo
+                        </span>
+                      )}
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="Emprendedor">Emprendedor</SelectItem>
+                        <SelectItem value="Crecimiento">Crecimiento</SelectItem>
+                        <SelectItem value="Corporativo">Corporativo</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                  <label id="status" className="text-sm">
+                    Estado
+                  </label>
+                  <Select
+                    onValueChange={(value) => setValue("status", value)}
+                    disabled={disabled}
+                  >
+                    <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
+                      {watch("status") ? (
+                        <span>{watch("status")}</span>
+                      ) : (
+                        <span className="text-[#9ca3af]">
+                          Selecciona un estado
+                        </span>
+                      )}
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="active">Activo</SelectItem>
+                        <SelectItem value="pause">Pausa</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
             <div className="w-full flex gap-3 flex-col">

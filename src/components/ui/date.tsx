@@ -18,6 +18,7 @@ type Inputs = {
   price: string;
   quantityProducts: string;
   type: string;
+  status: string;
   date: Date;
 };
 

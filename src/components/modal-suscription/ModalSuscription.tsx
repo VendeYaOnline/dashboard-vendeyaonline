@@ -41,6 +41,7 @@ const schema = yup
     type: yup.string().required("Campo obligatorio"),
     date: yup.date().required("Campo obligatorio"),
     client: yup.string().required("Campo obligatorio"),
+    status: yup.string().required("Campo obligatorio"),
   })
   .required();
 
@@ -90,6 +91,7 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
         quantityProducts: Number(data.quantityProducts),
         client: Number(data.client),
         date: formatDateText(data.date),
+        subscriptionId: "0",
       });
       refetch();
       reset();
@@ -161,9 +163,34 @@ const ModalSuscription = ({ active, onClose, type }: Props) => {
                 {errors.type?.message && !watch("type") && errors.type?.message}
               </p>
             </div>
+
+            <div className="flex flex-col gap-1">
+              <label id="status" className="text-sm">
+                Estado
+              </label>
+              <Select onValueChange={(value) => setValue("status", value)}>
+                <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
+                  {watch("status") ? (
+                    <SelectValue />
+                  ) : (
+                    <span className="text-[#9ca3af]">Selecciona un estado</span>
+                  )}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="active">Activo</SelectItem>
+                    <SelectItem value="pause">Pausa</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              <p className="text-left text-xs text-red-600 mt-1">
+                {errors.type?.message && !watch("type") && errors.type?.message}
+              </p>
+            </div>
             <div className="flex flex-col gap-1">
               <label id="quantityProducts" className="text-sm">
-                Cantidad de prodcutos
+                Cantidad de productos
               </label>
               <Input
                 id="quantityProducts"

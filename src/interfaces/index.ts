@@ -26,6 +26,8 @@ export interface Subscription {
   type: string;
   date: string;
   client: number;
+  status: string;
+  subscriptionId: string;
 }
 
 export interface SubscriptionUpdated {
@@ -33,6 +35,7 @@ export interface SubscriptionUpdated {
   quantityProducts?: number;
   type?: string;
   date?: string;
+  status?: string;
   client?: number;
 }
 
@@ -70,6 +73,7 @@ export interface InputsSubscription {
   price: string;
   quantityProducts: string;
   type: string;
+  status: string;
   date: Date;
   client?: string;
 }
