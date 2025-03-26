@@ -45,6 +45,8 @@ export interface SubscriptionResponse {
   quantityProducts: number;
   type: string;
   date: string;
+  status: string;
+  subscriptionId: string;
   client: number;
   createdat: string;
   updatedat: string;
