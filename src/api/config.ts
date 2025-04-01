@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const axiosConfig = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL:
+    "https://service-backend-vendeyaonline-production.up.railway.app/api",
 });
 
 axiosConfig.interceptors.request.use(
