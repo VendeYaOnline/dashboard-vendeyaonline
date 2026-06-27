@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "../components/ui/Siderbar";
-import Header from "../components/ui/Header";
+import DashboardShell from "../components/ui/DashboardShell";
 import Layout from "@/layaout";
 
 export const metadata: Metadata = {
@@ -15,17 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body>
-        <div className="flex h-screen bg-gray-100">
-          <Sidebar />
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <Header />
-            <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-              <Layout>{children}</Layout>
-            </main>
-          </div>
-        </div>
+        <DashboardShell>
+          <Layout>{children}</Layout>
+        </DashboardShell>
       </body>
     </html>
   );

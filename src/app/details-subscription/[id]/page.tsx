@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMutationUpdatedSubscription } from "@/api/mutation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Edit3, Save, X } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import {
   Select,
@@ -62,6 +62,7 @@ const DetailsSubscription = () => {
     setValue("status", subscription.status);
     setValue("date", new Date(convertDate(subscription.date)));
   };
+
   useEffect(() => {
     if (subscription) {
       fillFields(subscription);
@@ -87,160 +88,178 @@ const DetailsSubscription = () => {
         navigate.push("/");
       }, 1300);
     } catch (error) {
-      console.log("error-password", error);
+      console.log("error-update", error);
     }
   };
 
+  if (!subscription) return null;
+
   return (
-    subscription && (
-      <div>
+    <div className="fade-in max-w-4xl">
+      <div className="flex items-center justify-between mb-6">
         <Link href="/">
-          <Button variant="outline">
-            <ArrowLeft size={18} className="mr-1" />
-            Atras
+          <Button
+            variant="outline"
+            className="gap-2 h-9 text-sm rounded-xl border-slate-200 hover:bg-slate-50"
+          >
+            <ArrowLeft size={16} />
+            Atrás
           </Button>
         </Link>
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex gap-5">
-            <div className="w-full flex gap-3 flex-col">
-              <div className="mt-5 flex flex-col gap-2">
-                <label id="price" className="text-sm">
-                  Precio
-                </label>
-                <Input
-                  id="price"
-                  type="number"
-                  placeholder="$0"
-                  disabled={disabled}
-                  {...register("price")}
-                />
-                <p className="text-left text-xs text-red-600 mt-1">
-                  {errors.price?.message}
-                </p>
-              </div>
+        <span className="text-xs text-slate-400 font-mono">
+          ID #{params.id}
+        </span>
+      </div>
 
-              <div className="flex items-center gap-6">
-                <div className="flex flex-col gap-2 w-full">
-                  <label id="type" className="text-sm">
-                    Tipo
-                  </label>
-                  <Select
-                    onValueChange={(value) => setValue("type", value)}
-                    disabled={disabled}
-                  >
-                    <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
-                      {watch("type") ? (
-                        <span>{watch("type")}</span>
-                      ) : (
-                        <span className="text-[#9ca3af]">
-                          Selecciona el tipo
-                        </span>
-                      )}
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Emprendedor">Emprendedor</SelectItem>
-                        <SelectItem value="Crecimiento">Crecimiento</SelectItem>
-                        <SelectItem value="Corporativo">Corporativo</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2 w-full">
-                  <label id="status" className="text-sm">
-                    Estado
-                  </label>
-                  <Select
-                    onValueChange={(value) => setValue("status", value)}
-                    disabled={disabled}
-                  >
-                    <SelectTrigger className="focus:ring-1 focus:ring-blue-600 p-5">
-                      {watch("status") ? (
-                        <span>{watch("status")}</span>
-                      ) : (
-                        <span className="text-[#9ca3af]">
-                          Selecciona un estado
-                        </span>
-                      )}
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="active">Activo</SelectItem>
-                        <SelectItem value="pause">Pausa</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-            <div className="w-full flex gap-3 flex-col">
-              <div className="mt-5 flex flex-col gap-2">
-                <label id="date" className="text-sm">
-                  Fecha
-                </label>
-                <DatePicker
-                  value={watch("date")}
-                  setValue={setValue}
-                  disabled={disabled}
-                />
-                <p className="text-left text-xs text-red-600 mt-1">
-                  {errors.date?.message &&
-                    !watch("date") &&
-                    errors.date?.message}
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full flex gap-3 flex-col">
-              <div className="mt-5 flex flex-col gap-2">
-                <label id="quantityProducts" className="text-sm">
-                  Cantidad de productos
-                </label>
-                <Input
-                  id="quantityProducts"
-                  type="number"
-                  placeholder="100"
-                  disabled={disabled}
-                  {...register("quantityProducts")}
-                />
-                <p className="text-left text-xs text-red-600 mt-1">
-                  {errors.quantityProducts?.message}
-                </p>
-              </div>
-            </div>
-          </div>
-
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+        <div className="flex items-center justify-between mb-6 pb-5 border-b border-slate-100">
           <div>
-            {disabled && (
-              <Button
-                onClick={() => setDisabled(false)}
-                disabled={isLoading}
-                type="button"
-                className="mt-5 w-[300px] font-light p-5"
-              >
-                {isLoading ? "Cargando..." : "Editar campos"}
-              </Button>
-            )}
-
-            {!disabled && (
-              <div className="flex gap-4 items-center mt-5">
-                <Button type="submit" className="w-[300px] font-light p-5">
-                  Guardar campos
-                </Button>
-                <Button
-                  type="button"
-                  variant={"outline"}
-                  className="p-5"
-                  onClick={() => setDisabled(true)}
-                >
-                  Cancelar
-                </Button>
-              </div>
-            )}
+            <h2 className="text-base font-semibold text-slate-800">
+              Detalle de suscripción
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">
+              {disabled ? "Solo lectura" : "Modo edición"}
+            </p>
           </div>
+          {disabled && (
+            <Button
+              onClick={() => setDisabled(false)}
+              type="button"
+              className="gap-2 h-9 px-4 text-sm bg-indigo-600 hover:bg-indigo-700 rounded-xl"
+            >
+              <Edit3 size={15} />
+              Editar
+            </Button>
+          )}
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Precio */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Precio
+              </label>
+              <Input
+                type="number"
+                placeholder="$0"
+                disabled={disabled}
+                className="h-10 border-slate-200 focus:border-indigo-400 disabled:bg-slate-50 disabled:text-slate-500"
+                {...register("price")}
+              />
+              {errors.price && (
+                <p className="text-xs text-red-500">{errors.price.message}</p>
+              )}
+            </div>
+
+            {/* Cantidad de productos */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Cantidad de productos
+              </label>
+              <Input
+                type="number"
+                placeholder="0"
+                disabled={disabled}
+                className="h-10 border-slate-200 focus:border-indigo-400 disabled:bg-slate-50 disabled:text-slate-500"
+                {...register("quantityProducts")}
+              />
+              {errors.quantityProducts && (
+                <p className="text-xs text-red-500">
+                  {errors.quantityProducts.message}
+                </p>
+              )}
+            </div>
+
+            {/* Fecha */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Fecha
+              </label>
+              <DatePicker
+                value={watch("date")}
+                setValue={setValue}
+                disabled={disabled}
+              />
+              {errors.date && !watch("date") && (
+                <p className="text-xs text-red-500">{errors.date.message}</p>
+              )}
+            </div>
+
+            {/* Tipo */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-slate-700">Tipo</label>
+              <Select
+                onValueChange={(value) => setValue("type", value)}
+                disabled={disabled}
+              >
+                <SelectTrigger className="h-10 border-slate-200 focus:ring-1 focus:ring-indigo-400 disabled:bg-slate-50 disabled:text-slate-500">
+                  {watch("type") ? (
+                    <span>{watch("type")}</span>
+                  ) : (
+                    <span className="text-slate-400">Seleccionar tipo</span>
+                  )}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="Emprendedor">Emprendedor</SelectItem>
+                    <SelectItem value="Crecimiento">Crecimiento</SelectItem>
+                    <SelectItem value="Corporativo">Corporativo</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Estado */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Estado
+              </label>
+              <Select
+                onValueChange={(value) => setValue("status", value)}
+                disabled={disabled}
+              >
+                <SelectTrigger className="h-10 border-slate-200 focus:ring-1 focus:ring-indigo-400 disabled:bg-slate-50 disabled:text-slate-500">
+                  {watch("status") ? (
+                    <span>{watch("status")}</span>
+                  ) : (
+                    <span className="text-slate-400">Seleccionar estado</span>
+                  )}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="active">Activo</SelectItem>
+                    <SelectItem value="pause">Pausa</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {!disabled && (
+            <div className="flex items-center gap-3 mt-8 pt-5 border-t border-slate-100">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="gap-2 h-9 px-5 text-sm bg-indigo-600 hover:bg-indigo-700 rounded-xl"
+              >
+                <Save size={15} />
+                {isLoading ? "Guardando..." : "Guardar cambios"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="gap-2 h-9 px-4 text-sm rounded-xl border-slate-200 hover:bg-slate-50"
+                onClick={() => setDisabled(true)}
+              >
+                <X size={15} />
+                Cancelar
+              </Button>
+            </div>
+          )}
         </form>
       </div>
-    )
+    </div>
   );
 };
 

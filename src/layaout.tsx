@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { jwtDecode } from "jwt-decode";
@@ -11,7 +11,7 @@ interface Prop {
 }
 
 const Layout = ({ children }: Prop) => {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
   const route = useRouter();
 
   useEffect(() => {
@@ -27,16 +27,30 @@ const Layout = ({ children }: Prop) => {
           localStorage.removeItem("token_vendeyaonline");
           route.push("/login");
         }
-      } catch (error) {
-        console.log("Error al verificar el token");
+      } catch {
+        localStorage.removeItem("token_vendeyaonline");
+        route.push("/login");
       }
     }
   }, [route]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <div className="p-5">{children}</div>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#0f172a",
+            color: "#f1f5f9",
+            fontSize: "14px",
+          },
+          success: {
+            iconTheme: { primary: "#6366f1", secondary: "#fff" },
+          },
+        }}
+      />
+      <div className="p-4 sm:p-6">{children}</div>
     </QueryClientProvider>
   );
 };
